@@ -5,7 +5,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/app.ts",
+    "dev": "tsx watch api/app.ts",
     "build": "tsc",
     "start": "node dist/app.js"
   },
