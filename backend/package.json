@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "tsx watch api/app.ts",
     "build": "prisma generate && tsc",
+    "postinstall": "prisma generate",
     "start": "node dist/app.js"
   },
   "keywords": [],
