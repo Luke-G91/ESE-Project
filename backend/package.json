@@ -6,9 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch api/app.ts",
-    "build": "tsc",
-    "start": "node dist/app.js",
-    "postinstall": "prisma generate"
+    "build": "prisma generate && tsc",
+    "start": "node dist/app.js"
   },
   "keywords": [],
   "author": "",
