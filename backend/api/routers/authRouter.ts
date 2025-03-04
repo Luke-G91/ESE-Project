@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import { LoginRequest } from "../models/user/LoginRequest.js";
 
 const router = express.Router();
+const isProd = process.env.NODE_ENV === "production";
 
 router.post("/register", async (req, res) => {
   let createUserRequest = req.body as CreateUserRequest;
@@ -37,8 +38,9 @@ router.post("/login", async (req, res) => {
   const token = userController.generateTokenForuser(user);
   res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 1000 * 60 * 60 * 24,
+    secure: isProd,
+    sameSite: isProd ? "none" : "lax",
+    maxAge: 1000 * 60 * 60 * 12,
   });
 
   res.json({ message: "Logged in successfully" });
@@ -70,6 +72,7 @@ router.post("/logout", (_, res) => {
   res.clearCookie("token", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
+    sameSite: isProd ? "none" : "lax",
   });
 
   res.json({ message: "Logged out successfully" });
