@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import { CreateUserRequest } from "../models/user/CreateUserRequest";
-import { User } from "../models/user/User";
+import { CreateUserRequest } from "../models/user/CreateUserRequest.js";
+import { User } from "../models/user/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { UserViewModel } from "../models/user/UserViewModel";
+import { UserViewModel } from "../models/user/UserViewModel.js";
 
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";

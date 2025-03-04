@@ -1,8 +1,8 @@
 import express from "express";
-import * as userController from "../controllers/userController";
-import { CreateUserRequest } from "../models/user/CreateUserRequest";
+import * as userController from "../controllers/userController.js";
+import { CreateUserRequest } from "../models/user/CreateUserRequest.js";
 import bcrypt from "bcrypt";
-import { LoginRequest } from "../models/user/LoginRequest";
+import { LoginRequest } from "../models/user/LoginRequest.js";
 
 const router = express.Router();
 
