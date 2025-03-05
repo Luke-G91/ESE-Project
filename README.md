@@ -58,8 +58,6 @@ The application is built using a three-layer architecture:
 
 ## Deployment
 
-## Deployment
-
 - **Database:** The application uses a PostgreSQL database hosted on Supabase. This setup provides a robust, scalable, and fully managed SQL database, with reliable data storage and efficient query processing for the application's data needs.
 - **Backend:** The backend is deployed as serverless functions on Vercel. This approach removes the need for traditional servers, offering on-demand scaling, reduced maintenance, and cost efficiency while allowing fast and secure API responses.
 - **Frontend:** The frontend is also deployed on Vercel. Vercel’s optimized hosting environment means the application benefits from fast load times and seamless integration with the backend, ensuring a smooth and responsive user experience.
