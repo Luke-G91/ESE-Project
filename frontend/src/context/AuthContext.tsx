@@ -1,9 +1,10 @@
-import { createContext, FC, useContext } from "react";
+import { createContext, FC, ReactNode, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getCurrentUser } from "../api/auth";
+import UserViewModel from "../api/models/user/UserViewModel";
 
 interface AuthContextType {
-  user: any;
+  user: UserViewModel | undefined;
   isLoading: boolean;
   isError: boolean;
   refetch: () => void;
@@ -11,9 +12,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["userInfo"],
     queryFn: getCurrentUser,

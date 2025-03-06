@@ -13,4 +13,43 @@ model User {
   name      String
   password  String
   createdAt DateTime @default(now())
+
+  posts          Post[]
+  chatGroups     ChatGroup[]     @relation("UserChatGroups")
+  userChatGroups UserChatGroup[]
+}
+
+model ChatGroup {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  description String
+  createdAt   DateTime @default(now())
+
+  posts          Post[]
+  users          User[]          @relation("UserChatGroups")
+  userChatGroups UserChatGroup[]
+}
+
+model UserChatGroup {
+  id          Int @id @default(autoincrement())
+  userId      Int
+  chatGroupId Int
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chatGroup ChatGroup @relation(fields: [chatGroupId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, chatGroupId])
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+
+  authorId Int
+  author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  chatGroupId Int
+  chatGroup   ChatGroup @relation(fields: [chatGroupId], references: [id], onDelete: Cascade)
 }

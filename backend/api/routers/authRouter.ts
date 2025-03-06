@@ -35,7 +35,7 @@ router.post("/login", async (req, res) => {
     return;
   }
 
-  const token = userController.generateTokenForuser(user);
+  const token = userController.generateTokenForUser(user);
   res.cookie("token", token, {
     httpOnly: true,
     secure: isProd,
