@@ -83,7 +83,7 @@ const GroupDetails = () => {
             <div>Loading posts...</div>
           ) : (
             <ul>
-              {group.posts?.map((post: any) => (
+              {group?.posts.map((post) => (
                 <li key={post.id}>
                   <Post post={post} />
                 </li>
@@ -122,7 +122,7 @@ const GroupDetails = () => {
             <div>Loading users...</div>
           ) : (
             <ul>
-              {group?.users?.map((u: any) => (
+              {group?.users.map((u) => (
                 <li key={u.id}>
                   {u.name} ({u.email})
                   {u.id !== user.id && (

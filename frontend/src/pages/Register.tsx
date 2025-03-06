@@ -15,7 +15,7 @@ const Register = () => {
     onSuccess: () => {
       navigate("/login");
     },
-    onError: (error: any) => {
+    onError: (error) => {
       console.error("Register error:", error);
     },
   });

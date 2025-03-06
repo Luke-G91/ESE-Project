@@ -16,7 +16,7 @@ const Login = () => {
       navigate("/home");
       refetch();
     },
-    onError: (error: any) => {
+    onError: (error) => {
       console.error("Login error:", error);
     },
   });
