@@ -10,6 +10,8 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import GroupDetails from "./pages/GroupDetails";
+import Groups from "./pages/Groups";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +28,22 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Home />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/groups"
+              element={
+                <ProtectedRoute>
+                  <Groups />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/group/:groupId"
+              element={
+                <ProtectedRoute>
+                  <GroupDetails />
                 </ProtectedRoute>
               }
             />

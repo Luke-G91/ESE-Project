@@ -24,6 +24,31 @@ router.get("/", authenticateToken, async (req, res) => {
   }
 });
 
+router.get("/:groupId", authenticateToken, async (req, res) => {
+  const user = req.user;
+  if (!user) {
+    res.status(400).json({ error: "Failed to fetch groups" });
+    return;
+  }
+
+  const groupId: number = Number(req.params.groupId);
+  const userGroup = await groupController.findUserGroupByGroupIdAndUserId(
+    groupId,
+    user.id,
+  );
+  if (!userGroup) {
+    res.status(403).json({ error: "Forbidden" });
+    return;
+  }
+
+  try {
+    const group = await groupController.findGroupById(groupId);
+    res.json(group);
+  } catch (error) {
+    res.status(400).json({ error: "Failed to fetch groups" });
+  }
+});
+
 router.get("/:groupId/post", authenticateToken, async (req, res) => {
   const user = req.user;
   if (!user) {
@@ -101,8 +126,8 @@ router.post("/user", authenticateToken, async (req, res) => {
   }
 });
 
-router.delete("/user", authenticateToken, async (req, res) => {
-  const { groupId, userId } = req.body as RemoveUserFromGroupRequest;
+router.delete("/:groupId/user/:userId", authenticateToken, async (req, res) => {
+  const { groupId, userId } = req.params;
 
   const user = req.user;
   if (!user) {
@@ -111,7 +136,7 @@ router.delete("/user", authenticateToken, async (req, res) => {
   }
 
   const userGroup = await groupController.findUserGroupByGroupIdAndUserId(
-    groupId,
+    Number(groupId),
     user.id,
   );
   if (!userGroup) {
@@ -120,7 +145,10 @@ router.delete("/user", authenticateToken, async (req, res) => {
   }
 
   const userGroupToDelete =
-    await groupController.findUserGroupByGroupIdAndUserId(groupId, userId);
+    await groupController.findUserGroupByGroupIdAndUserId(
+      Number(groupId),
+      Number(userId),
+    );
   if (!userGroupToDelete) {
     res.status(400).json({ error: "User is not in group" });
     return;
