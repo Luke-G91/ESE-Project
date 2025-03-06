@@ -43,7 +43,7 @@ const Groups = () => {
       <h1>Your Groups</h1>
       <button onClick={() => navigate("/home")}>Home</button>
       <ul>
-        {groups?.map((group: any) => (
+        {groups?.map((group) => (
           <li key={group.id}>
             <span
               onClick={() => navigate(`/group/${group.id}`)}
