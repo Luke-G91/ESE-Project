@@ -5,7 +5,6 @@ import * as postController from "../controllers/postController.js";
 import { authenticateToken } from "../middleware/authenticateToken.js";
 import { CreateGroupRequest } from "../models/group/CreateGroupRequest.js";
 import AddUserToGroupRequest from "../models/group/AddUserToGroupRequest.js";
-import RemoveUserFromGroupRequest from "../models/group/RemoveUserFromGroupRequest.js";
 
 const router = express.Router();
 
@@ -92,8 +91,9 @@ router.post("/", authenticateToken, async (req, res) => {
   }
 });
 
-router.post("/user", authenticateToken, async (req, res) => {
-  const { groupId, userEmail } = req.body as AddUserToGroupRequest;
+router.post("/:groupId/user", authenticateToken, async (req, res) => {
+  const { userEmail } = req.body as AddUserToGroupRequest;
+  const groupId = Number(req.params.groupId);
 
   const user = req.user;
   if (!user) {

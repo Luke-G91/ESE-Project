@@ -30,8 +30,8 @@ export const getGroup = async (groupId: number): Promise<GroupDetails> => {
 
 export const addUserToGroup = async (groupId: number, email: string) => {
   await axios.post(
-    `${baseUrl}/group/user`,
-    { userEmail: email, groupId },
+    `${baseUrl}/group/${groupId}/user`,
+    { userEmail: email },
     {
       withCredentials: true,
     },
