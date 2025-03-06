@@ -22,7 +22,7 @@ export const findUserByEmail = async (email: string) => {
   return user;
 };
 
-export const generateTokenForuser = (user: User) => {
+export const generateTokenForUser = (user: User) => {
   const userViewModel: UserViewModel = {
     id: user.id,
     name: user.name,
@@ -65,4 +65,10 @@ export const findUserByToken = async (token: string) => {
   };
 
   return userViewModel;
+};
+
+export const findUserById = async (id: number) => {
+  const user: User | null = await prisma.user.findUnique({ where: { id } });
+
+  return user;
 };

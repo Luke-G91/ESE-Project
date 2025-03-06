@@ -1,26 +1,25 @@
 import axios from "axios";
+import LoginRequest from "./models/auth/LoginRequest";
+import RegisterRequest from "./models/auth/RegisterRequest";
+import UserViewModel from "./models/user/UserViewModel";
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
-export const login = async (data: { email: string; password: string }) => {
+export const login = async (data: LoginRequest) => {
   const response = await axios.post(`${baseUrl}/login`, data, {
     withCredentials: true,
   });
   return response.data;
 };
 
-export const register = async (data: {
-  email: string;
-  name: string;
-  password: string;
-}) => {
+export const register = async (data: RegisterRequest) => {
   const response = await axios.post(`${baseUrl}/register`, data, {
     withCredentials: true,
   });
   return response.data;
 };
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = async (): Promise<UserViewModel> => {
   const response = await axios.get(`${baseUrl}/userInfo`, {
     withCredentials: true,
   });

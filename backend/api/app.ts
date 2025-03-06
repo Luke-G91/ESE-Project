@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRouter from "./routers/authRouter.js";
+import postRouter from "./routers/postRouter.js";
+import groupRouter from "./routers/groupRouter.js";
 
 dotenv.config();
 
@@ -22,6 +24,8 @@ app.use(
 app.use(cookieParser());
 
 app.use("/api", authRouter);
+app.use("/api/post", postRouter);
+app.use("/api/group", groupRouter);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
