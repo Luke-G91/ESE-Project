@@ -1,5 +1,7 @@
 import axios from "axios";
 import { GroupViewModel } from "./models/group/ViewGroupModel";
+import { GroupDetails } from "./models/group/GroupDetails";
+import { CreateGroupRequest } from "./models/group/CreateGroupRequest";
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -10,17 +12,16 @@ export const getAllGroups = async (): Promise<GroupViewModel[]> => {
   return response.data;
 };
 
-export const createGroup = async (groupData: {
-  name: string;
-  description: string;
-}): Promise<GroupViewModel> => {
+export const createGroup = async (
+  groupData: CreateGroupRequest,
+): Promise<GroupViewModel> => {
   const response = await axios.post(`${baseUrl}/group`, groupData, {
     withCredentials: true,
   });
   return response.data;
 };
 
-export const getGroup = async (groupId: number): Promise<any> => {
+export const getGroup = async (groupId: number): Promise<GroupDetails> => {
   const response = await axios.get(`${baseUrl}/group/${groupId}`, {
     withCredentials: true,
   });
