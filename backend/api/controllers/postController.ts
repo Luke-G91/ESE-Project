@@ -22,7 +22,7 @@ export const createPost = async (post: CreatePostRequest, authorId: number) => {
   return newPost;
 };
 
-export const findAllPostsForUser = async (userId: number) => {
+export const findAllPostsByUserId = async (userId: number) => {
   return await prisma.post.findMany({
     where: { authorId: userId },
   });
@@ -31,5 +31,23 @@ export const findAllPostsForUser = async (userId: number) => {
 export const findAllPostsForGroup = async (groupId: number) => {
   return await prisma.post.findMany({
     where: { chatGroupId: groupId },
+  });
+};
+
+export const findAllPostsForUser = async (userId: number) => {
+  const userGroups = await prisma.userChatGroup.findMany({
+    where: { userId },
+    select: { chatGroupId: true },
+  });
+
+  const groupIds = userGroups.map((userGroup) => userGroup.chatGroupId);
+
+  if (groupIds.length === 0) return [];
+
+  return await prisma.post.findMany({
+    where: {
+      chatGroupId: { in: groupIds },
+    },
+    orderBy: { createdAt: "desc" },
   });
 };
