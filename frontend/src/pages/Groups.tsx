@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../context/AuthContext";
 import { createGroup, getAllGroups } from "../api/group";
+import "./Groups.css";
 
 const Groups = () => {
   const { user } = useAuth();
@@ -36,26 +37,16 @@ const Groups = () => {
     setNewGroup((prev) => ({ ...prev, [name]: value }));
   };
 
-  if (isLoading) return <div>Loading groups...</div>;
+  if (isLoading) return <div className="loading">Loading groups...</div>;
 
   return (
-    <div>
-      <h1>Your Groups</h1>
-      <button onClick={() => navigate("/home")}>Home</button>
-      <ul>
-        {groups?.map((group) => (
-          <li key={group.id}>
-            <span
-              onClick={() => navigate(`/group/${group.id}`)}
-              style={{ cursor: "pointer", color: "blue" }}
-            >
-              {group.name}
-            </span>
-          </li>
-        ))}
-      </ul>
-      <h2>Create New Group</h2>
-      <form onSubmit={handleCreateGroup}>
+    <div className="groups-container">
+      <button className="btn" onClick={() => navigate("/home")}>
+        Home
+      </button>
+
+      <h2 className="create-group-title">Create New Group</h2>
+      <form className="create-group-form" onSubmit={handleCreateGroup}>
         <div>
           <label>Name:</label>
           <input
@@ -75,8 +66,24 @@ const Groups = () => {
             required
           />
         </div>
-        <button type="submit">Create Group</button>
+        <button type="submit" className="btn">
+          Create Group
+        </button>
       </form>
+
+      <h1 className="page-title">Your Groups</h1>
+      <div className="groups-list">
+        {groups?.map((group) => (
+          <div
+            key={group.id}
+            className="group-card"
+            onClick={() => navigate(`/group/${group.id}`)}
+          >
+            <h3 className="group-name">{group.name}</h3>
+            <p className="group-description">{group.description}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

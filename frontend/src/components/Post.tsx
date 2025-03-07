@@ -1,10 +1,11 @@
 import { PostViewModel } from "../api/models/post/PostViewModel";
 import { createPostLike, deletePostLike } from "../api/post";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import "./Post.css";
 
 interface PostProps {
   post: PostViewModel;
-  groupId: number | null;
+  groupId?: number | null;
 }
 
 const Post = ({ post, groupId = null }: PostProps) => {
@@ -28,20 +29,29 @@ const Post = ({ post, groupId = null }: PostProps) => {
   });
 
   return (
-    <li key={post.id}>
-      <h4>{post.title}</h4>
-      <p>{post.content}</p>
-      <p>
-        Posted by {post.author} {!groupId && `in ${post.group}`}
-      </p>
-
-      <div>
-        <button onClick={() => toggleLike()}>
-          {post.likedByCurrentUser ? "Unlike" : "Like"}
-        </button>
-        {post.likeCount} Likes
+    <div className="post-card">
+      <div className="post-header">
+        <h4 className="post-title">{post.title}</h4>
+        <span className="post-date">
+          {new Date(post.createdAt).toLocaleString()}
+        </span>
       </div>
-    </li>
+      <div className="post-body">
+        <p className="post-content">{post.content}</p>
+      </div>
+      <div className="post-footer">
+        <div className="post-meta">
+          <span className="post-author">Posted by {post.author}</span>
+          {!groupId && <span className="post-group"> in {post.group}</span>}
+        </div>
+        <div className="post-actions">
+          <button className="like-button" onClick={() => toggleLike()}>
+            {post.likedByCurrentUser ? "Unlike" : "Like"}
+          </button>
+          <span className="like-count">{post.likeCount} Likes</span>
+        </div>
+      </div>
+    </div>
   );
 };
 
