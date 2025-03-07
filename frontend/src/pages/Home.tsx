@@ -32,7 +32,7 @@ const Home = () => {
       <button onClick={handleLogout}>Logout</button>
       <button onClick={() => navigate("/groups")}>Groups</button>
 
-      <h2>Your Posts</h2>
+      <h2>Posts</h2>
       <ul>{posts?.map((post) => <Post post={post} key={post.id} />)}</ul>
     </div>
   );

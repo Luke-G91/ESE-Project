@@ -11,12 +11,13 @@ const GroupDetails = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { user } = useAuth();
+
   const [activeTab, setActiveTab] = useState("posts");
   const [newPost, setNewPost] = useState({ title: "", content: "" });
   const [newUserEmail, setNewUserEmail] = useState("");
 
   const { data: group, isLoading: isGroupLoading } = useQuery({
-    queryKey: ["groupUsers", groupId],
+    queryKey: ["group", groupId],
     queryFn: () => getGroup(Number(groupId)),
     enabled: !!groupId,
   });
@@ -28,7 +29,7 @@ const GroupDetails = () => {
       groupId: number;
     }) => createPost(postData),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["groupPosts", groupId] });
+      queryClient.invalidateQueries({ queryKey: ["group", groupId] });
       setNewPost({ title: "", content: "" });
     },
   });
