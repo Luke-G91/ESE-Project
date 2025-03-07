@@ -2,6 +2,7 @@ import axios from "axios";
 import { GroupViewModel } from "./models/group/ViewGroupModel";
 import { GroupDetails } from "./models/group/GroupDetails";
 import { CreateGroupRequest } from "./models/group/CreateGroupRequest";
+import { PostViewModel } from "./models/post/PostViewModel";
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -42,4 +43,13 @@ export const deleteUserFromGroup = async (groupId: number, userId: number) => {
   await axios.delete(`${baseUrl}/group/${groupId}/user/${userId}`, {
     withCredentials: true,
   });
+};
+
+export const getGroupPosts = async (
+  groupId: number,
+): Promise<PostViewModel[]> => {
+  const response = await axios.get(`${baseUrl}/group/${groupId}/post`, {
+    withCredentials: true,
+  });
+  return response.data;
 };

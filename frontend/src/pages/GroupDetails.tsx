@@ -3,11 +3,17 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../context/AuthContext";
 import Post from "../components/Post";
-import { addUserToGroup, deleteUserFromGroup, getGroup } from "../api/group";
+import {
+  addUserToGroup,
+  deleteUserFromGroup,
+  getGroup,
+  getGroupPosts,
+} from "../api/group";
 import { createPost } from "../api/post";
 
 const GroupDetails = () => {
   const { groupId } = useParams();
+  const groupIdNumber = Number(groupId);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { user } = useAuth();
@@ -17,9 +23,15 @@ const GroupDetails = () => {
   const [newUserEmail, setNewUserEmail] = useState("");
 
   const { data: group, isLoading: isGroupLoading } = useQuery({
-    queryKey: ["group", groupId],
-    queryFn: () => getGroup(Number(groupId)),
-    enabled: !!groupId,
+    queryKey: ["group", groupIdNumber],
+    queryFn: () => getGroup(groupIdNumber),
+    enabled: !!groupIdNumber,
+  });
+
+  const { data: groupPosts, isLoading: isGroupPostsLoading } = useQuery({
+    queryKey: ["groupPosts", groupIdNumber],
+    queryFn: () => getGroupPosts(groupIdNumber),
+    enabled: !!groupIdNumber,
   });
 
   const { mutate: createNewPost } = useMutation({
@@ -29,30 +41,35 @@ const GroupDetails = () => {
       groupId: number;
     }) => createPost(postData),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["group", groupId] });
+      queryClient.invalidateQueries({
+        queryKey: ["groupPosts", groupIdNumber],
+      });
       setNewPost({ title: "", content: "" });
     },
   });
 
   const { mutate: addNewUser } = useMutation({
-    mutationFn: (email: string) => addUserToGroup(Number(groupId), email),
+    mutationFn: (email: string) => addUserToGroup(groupIdNumber, email),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["groupUsers", groupId] });
+      queryClient.invalidateQueries({
+        queryKey: ["groupUsers", groupIdNumber],
+      });
       setNewUserEmail("");
     },
   });
 
   const { mutate: removeUser } = useMutation({
-    mutationFn: (userId: number) =>
-      deleteUserFromGroup(Number(groupId), userId),
+    mutationFn: (userId: number) => deleteUserFromGroup(groupIdNumber, userId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["groupUsers", groupId] });
+      queryClient.invalidateQueries({
+        queryKey: ["groupUsers", groupIdNumber],
+      });
     },
   });
 
   const handleCreatePost = (e: FormEvent) => {
     e.preventDefault();
-    createNewPost({ ...newPost, groupId: Number(groupId) });
+    createNewPost({ ...newPost, groupId: groupIdNumber });
   };
 
   const handlePostChange = (
@@ -67,7 +84,7 @@ const GroupDetails = () => {
     addNewUser(newUserEmail);
   };
 
-  if (!groupId || !user) return <div>Group not found</div>;
+  if (!groupIdNumber || !user) return <div>Group not found</div>;
 
   return (
     <div>
@@ -80,13 +97,13 @@ const GroupDetails = () => {
       {activeTab === "posts" && (
         <div>
           <h2>Group Posts</h2>
-          {isGroupLoading ? (
+          {isGroupPostsLoading ? (
             <div>Loading posts...</div>
           ) : (
             <ul>
-              {group?.posts.map((post) => (
+              {groupPosts?.map((post) => (
                 <li key={post.id}>
-                  <Post post={post} />
+                  <Post post={post} groupId={groupIdNumber} />
                 </li>
               ))}
             </ul>
