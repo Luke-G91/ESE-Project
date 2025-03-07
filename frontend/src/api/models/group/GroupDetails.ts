@@ -1,4 +1,3 @@
-import ViewPostModel from "../post/ViewPostModel";
 import UserViewModel from "../user/UserViewModel";
 
 export interface GroupDetails {
@@ -6,5 +5,4 @@ export interface GroupDetails {
   name: string;
   description: string;
   users: UserViewModel[];
-  posts: ViewPostModel[];
 }

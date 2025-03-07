@@ -1,0 +1,169 @@
+.group-details-container {
+  background-color: #121212;
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.tab {
+  color: #e0e0e0;
+  font-size: 1.5rem;
+  padding-bottom: 0.5rem;
+  margin-right: 2rem;
+  cursor: pointer;
+  transition: border-bottom 0.3s ease;
+}
+
+.tab:hover {
+  border-bottom: 2px solid #00ccff;
+}
+
+.tab.active {
+  color: #00ccff;
+  border-bottom: 2px solid #00ccff;
+}
+
+.posts-section,
+.users-section {
+  max-width: 1200px;
+  width: 100%;
+}
+
+.posts-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.posts-list-container {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: #00ccff;
+  margin-bottom: 1rem;
+}
+
+.post-list,
+.user-list {
+  list-style: none;
+  padding: 0;
+}
+
+.create-post-title,
+.add-user-title {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+}
+
+.post-form,
+.add-user-form {
+  background-color: #1e1e1e;
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 600px;
+  margin-top: 1rem;
+}
+
+.post-form input,
+.post-form textarea,
+.add-user-form input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+  background-color: #333;
+  border: none;
+  color: #e0e0e0;
+}
+
+.post-form input:focus,
+.post-form textarea:focus,
+.add-user-form input:focus {
+  outline: none;
+  border: 2px solid #00ccff;
+}
+
+.btn-submit {
+  background: linear-gradient(45deg, #00ccff, #9933ff);
+  border: none;
+  color: #e0e0e0;
+  padding: 0.75rem 1.5rem;
+  margin-top: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.btn-submit:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.user-item {
+  margin-bottom: 1rem;
+}
+
+.btn-remove {
+  background: linear-gradient(45deg, #ff6666, #ff0033);
+  border: none;
+  color: #e0e0e0;
+  padding: 0.5rem 1rem;
+  margin-left: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.btn-remove:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.btn-back {
+  background: linear-gradient(45deg, #00ccff, #9933ff);
+  border: none;
+  color: #e0e0e0;
+  padding: 0.75rem 1.5rem;
+  margin-top: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.btn-back:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #e0e0e0;
+  font-family: "Roboto Mono", monospace;
+}

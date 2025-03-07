@@ -66,7 +66,7 @@ router.get("/:groupId/post", authenticateToken, async (req, res) => {
   }
 
   try {
-    const groups = await postController.findAllPostsForGroup(groupId);
+    const groups = await postController.findAllPostsForGroup(groupId, user.id);
     res.json(groups);
   } catch (error) {
     res.status(400).json({ error: "Failed to fetch groups" });

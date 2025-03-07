@@ -12,6 +12,7 @@ import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import GroupDetails from "./pages/GroupDetails";
 import Groups from "./pages/Groups";
+import "./App.css";
 
 const queryClient = new QueryClient();
 

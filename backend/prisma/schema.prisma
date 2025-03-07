@@ -17,6 +17,7 @@ model User {
   posts          Post[]
   chatGroups     ChatGroup[]     @relation("UserChatGroups")
   userChatGroups UserChatGroup[]
+  PostLike       PostLike[]
 }
 
 model ChatGroup {
@@ -51,5 +52,17 @@ model Post {
   author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   chatGroupId Int
-  chatGroup   ChatGroup @relation(fields: [chatGroupId], references: [id], onDelete: Cascade)
+  chatGroup   ChatGroup  @relation(fields: [chatGroupId], references: [id], onDelete: Cascade)
+  PostLike    PostLike[]
+}
+
+model PostLike {
+  id     Int @id @default(autoincrement())
+  userId Int
+  postId Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
 }

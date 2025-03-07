@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import { getAllPosts } from "../api/post";
 import Post from "../components/Post";
+import "./Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -21,19 +22,30 @@ const Home = () => {
   };
 
   if (isLoading || isPostsLoading || !user) {
-    return <div>Loading...</div>;
+    return <div className="loading">Loading...</div>;
   }
 
   return (
-    <div>
-      <h1>Home</h1>
-      <p>Welcome, {user.name}!</p>
+    <div className="home-container">
+      <div className="home-header">
+        <div className="home-buttons">
+          <button className="btn" onClick={() => navigate("/groups")}>
+            Groups
+          </button>
+          <button className="btn" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
+        <h1 className="home-title">Home</h1>
+        <p className="home-welcome">Welcome, {user.name}!</p>
+      </div>
 
-      <button onClick={handleLogout}>Logout</button>
-      <button onClick={() => navigate("/groups")}>Groups</button>
-
-      <h2>Your Posts</h2>
-      <ul>{posts?.map((post) => <Post post={post} key={post.id} />)}</ul>
+      <h2 className="posts-title">Posts</h2>
+      <div className="posts-container">
+        <ul className="posts-list">
+          {posts?.map((post) => <Post post={post} key={post.id} />)}
+        </ul>
+      </div>
     </div>
   );
 };
