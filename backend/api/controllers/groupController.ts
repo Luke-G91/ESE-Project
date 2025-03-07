@@ -69,16 +69,6 @@ export const findGroupById = async (
           },
         },
       },
-      posts: {
-        select: {
-          id: true,
-          title: true,
-          content: true,
-          createdAt: true,
-          authorId: true,
-          chatGroupId: true,
-        },
-      },
     },
   });
 
@@ -91,6 +81,5 @@ export const findGroupById = async (
     name: group.name,
     description: group.description,
     users: group.userChatGroups.map((userGroup) => userGroup.user),
-    posts: group.posts,
   };
 };

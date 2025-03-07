@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { CreatePostRequest } from "../models/post/CreatePostRequest.js";
 import { Post } from "../models/post/Post.js";
+import { PostViewModel } from "../models/post/PostViewModel.js";
 
 const prisma = new PrismaClient();
 
@@ -28,10 +29,42 @@ export const findAllPostsByUserId = async (userId: number) => {
   });
 };
 
-export const findAllPostsForGroup = async (groupId: number) => {
-  return await prisma.post.findMany({
-    where: { chatGroupId: groupId },
+export const findAllPostsForGroup = async (groupId: number, userId: number) => {
+  const posts = await prisma.post.findMany({
+    where: {
+      chatGroupId: groupId,
+    },
+    include: {
+      author: {
+        select: { name: true },
+      },
+      chatGroup: {
+        select: { name: true },
+      },
+      _count: {
+        select: { PostLike: true },
+      },
+      // PostLikes from current user
+      PostLike: {
+        where: { userId },
+        select: { id: true },
+      },
+    },
+    orderBy: { createdAt: "desc" },
   });
+
+  const postViewModels: PostViewModel[] = posts.map((post) => ({
+    id: post.id,
+    title: post.title,
+    content: post.content,
+    createdAt: post.createdAt,
+    author: post.author.name,
+    group: post.chatGroup.name,
+    likeCount: post._count.PostLike,
+    likedByCurrentUser: post.PostLike.length > 0,
+  }));
+
+  return postViewModels;
 };
 
 export const findAllPostsForUser = async (userId: number) => {
@@ -44,10 +77,39 @@ export const findAllPostsForUser = async (userId: number) => {
 
   if (groupIds.length === 0) return [];
 
-  return await prisma.post.findMany({
+  const posts = await prisma.post.findMany({
     where: {
       chatGroupId: { in: groupIds },
     },
+    include: {
+      author: {
+        select: { name: true },
+      },
+      chatGroup: {
+        select: { name: true },
+      },
+      _count: {
+        select: { PostLike: true },
+      },
+      // PostLikes from current user
+      PostLike: {
+        where: { userId },
+        select: { id: true },
+      },
+    },
     orderBy: { createdAt: "desc" },
   });
+
+  const postViewModels: PostViewModel[] = posts.map((post) => ({
+    id: post.id,
+    title: post.title,
+    content: post.content,
+    createdAt: post.createdAt,
+    author: post.author.name,
+    group: post.chatGroup.name,
+    likeCount: post._count.PostLike,
+    likedByCurrentUser: post.PostLike.length > 0,
+  }));
+
+  return postViewModels;
 };

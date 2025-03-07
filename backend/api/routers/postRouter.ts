@@ -1,6 +1,7 @@
 import express from "express";
 import * as postController from "../controllers/postController.js";
 import * as groupController from "../controllers/groupController.js";
+import * as postLikeController from "../controllers/postLikeController.js";
 import { CreatePostRequest } from "../models/post/CreatePostRequest.js";
 import { authenticateToken } from "../middleware/authenticateToken.js";
 
@@ -44,6 +45,40 @@ router.post("/", authenticateToken, async (req, res) => {
     res.json({ message: "Post created successfully", newPost });
   } catch (error) {
     res.status(400).json({ error: "Failed to create post" });
+  }
+});
+
+router.post("/:postId/like", authenticateToken, async (req, res) => {
+  const { postId } = req.params;
+  const user = req.user;
+
+  if (!user) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+
+  try {
+    await postLikeController.createPostLike(Number(postId), user.id);
+    res.json({ message: "Post liked successfully" });
+  } catch (error) {
+    res.status(400).json({ error: "Failed to like post" });
+  }
+});
+
+router.delete("/:postId/like", authenticateToken, async (req, res) => {
+  const { postId } = req.params;
+  const user = req.user;
+
+  if (!user) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+
+  try {
+    await postLikeController.deletePostLike(Number(postId), user.id);
+    res.json({ message: "Post liked removed successfully" });
+  } catch (error) {
+    res.status(400).json({ error: "Failed to remove like from post" });
   }
 });
 
