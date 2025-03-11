@@ -52,7 +52,7 @@ const GroupDetails = () => {
     mutationFn: (email: string) => addUserToGroup(groupIdNumber, email),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["groupUsers", groupIdNumber],
+        queryKey: ["group", groupIdNumber],
       });
       setNewUserEmail("");
     },
@@ -62,7 +62,7 @@ const GroupDetails = () => {
     mutationFn: (userId: number) => deleteUserFromGroup(groupIdNumber, userId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["groupUsers", groupIdNumber],
+        queryKey: ["group", groupIdNumber],
       });
     },
   });
