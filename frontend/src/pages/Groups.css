@@ -83,29 +83,26 @@
 
 .groups-list {
   margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
   width: 100%;
   max-width: 1200px;
-  max-height: 60vh;
+  padding: 0;
+  margin: 0 auto;
   overflow-y: auto;
-  padding-right: 1rem;
+  overflow-x: hidden;
+  min-height: 50vh;
 }
 
 .group-card {
   background-color: #1e1e1e;
-  padding: 1.5rem;
+  padding: 0.25rem 1.5rem;
   border-radius: 8px;
   cursor: pointer;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1.5rem;
 }
 
 .group-card:hover {
-  transform: translateY(-5px);
   box-shadow: 0 8px 15px rgba(0, 204, 255, 0.6);
 }
 
