@@ -1,3 +1,4 @@
+import "./Login.css";
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
@@ -27,9 +28,11 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
+    <div className="login-container">
+      <div className="login-header">
+        <h1 className="login-title">Login</h1>
+      </div>
+      <form className="login-form" onSubmit={handleLogin}>
         <div>
           <label>Email:</label>
           <input
@@ -50,15 +53,10 @@ const Login = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      {mutation.isError && <p style={{ color: "red" }}>Login failed</p>}
-      <p>
+      {mutation.isError && <p className="login-error">Login failed</p>}
+      <p className="login-register">
         Don't have an account?{" "}
-        <span
-          style={{ color: "blue", cursor: "pointer" }}
-          onClick={() => navigate("/register")}
-        >
-          Register here
-        </span>
+        <span onClick={() => navigate("/register")}>Register here</span>
       </p>
     </div>
   );
