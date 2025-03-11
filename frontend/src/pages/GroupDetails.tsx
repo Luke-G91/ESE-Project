@@ -107,7 +107,7 @@ const GroupDetails = () => {
       {activeTab === "posts" && (
         <div className="posts-section">
           {isGroupPostsLoading ? (
-            <div>Loading posts...</div>
+            <div className="loading">Loading posts...</div>
           ) : (
             <div className="posts-list-container">
               <ul className="post-list">
@@ -154,7 +154,7 @@ const GroupDetails = () => {
       {activeTab === "users" && (
         <div className="users-section">
           {isGroupLoading ? (
-            <div>Loading users...</div>
+            <div className="loading">Loading users...</div>
           ) : (
             <ul className="user-list">
               {group?.users.map((u) => (

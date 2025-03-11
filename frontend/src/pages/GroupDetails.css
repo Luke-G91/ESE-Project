@@ -145,12 +145,3 @@
   transform: scale(1.05);
   opacity: 0.9;
 }
-
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  color: #e0e0e0;
-  font-family: "Roboto Mono", monospace;
-}

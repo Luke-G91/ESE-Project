@@ -116,13 +116,3 @@
   font-size: 1rem;
   color: #e0e0e0;
 }
-
-.loading {
-  background-color: #121212;
-  color: #e0e0e0;
-  font-family: "Roboto Mono", monospace;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
