@@ -141,11 +141,15 @@ const GroupDetails = () => {
           ) : (
             <div className="posts-list-container">
               <ul className="post-list">
-                {groupPosts?.map((post) => (
-                  <li key={post.id}>
-                    <Post post={post} groupId={groupIdNumber} />
-                  </li>
-                ))}
+                {groupPosts && groupPosts.length > 0 ? (
+                  groupPosts?.map((post) => (
+                    <li key={post.id}>
+                      <Post post={post} groupId={groupIdNumber} />
+                    </li>
+                  ))
+                ) : (
+                  <div>There are no posts for this group</div>
+                )}
               </ul>
             </div>
           )}

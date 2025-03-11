@@ -43,7 +43,11 @@ const Home = () => {
       <h2 className="posts-title">Posts</h2>
       <div className="posts-container">
         <ul className="posts-list">
-          {posts?.map((post) => <Post post={post} key={post.id} />)}
+          {posts && posts.length > 0 ? (
+            posts.map((post) => <Post post={post} key={post.id} />)
+          ) : (
+            <div>There are no posts to view</div>
+          )}
         </ul>
       </div>
     </div>
