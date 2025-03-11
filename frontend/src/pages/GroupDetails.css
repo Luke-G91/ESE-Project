@@ -69,17 +69,16 @@
 .create-post-title,
 .add-user-title {
   font-size: 1.5rem;
-  margin-top: 2rem;
+  margin-bottom: 0;
 }
 
 .post-form,
 .add-user-form {
   background-color: #1e1e1e;
-  padding: 1.5rem;
+  padding: 2rem;
   border-radius: 8px;
   width: 100%;
   max-width: 600px;
-  margin-top: 1rem;
 }
 
 .post-form input,

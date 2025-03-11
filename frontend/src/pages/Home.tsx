@@ -23,7 +23,6 @@ const Home = () => {
         <p className="home-welcome">Welcome, {user.name}!</p>
       </div>
 
-      <h2 className="posts-title">Posts</h2>
       <div className="posts-container">
         <ul className="posts-list">
           {posts && posts.length > 0 ? (

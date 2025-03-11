@@ -4,13 +4,13 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .page-title {
   font-size: 2.5rem;
   margin-bottom: 1rem;
-  text-align: left;
+  text-align: center;
+  color: #00ccff;
 }
 
 .btn {
@@ -32,7 +32,7 @@
 }
 
 .create-group-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-top: 2rem;
   margin-bottom: 1rem;
   color: #e0e0e0;

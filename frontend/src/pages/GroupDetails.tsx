@@ -88,7 +88,8 @@ const GroupDetails = () => {
 
   return (
     <div className="group-details-container">
-      <h1 className="page-title">Group Details</h1>
+      <h1 className="page-title">{group?.name}</h1>
+      <div>{group?.description}</div>
       <div className="tabs">
         <span
           className={`tab ${activeTab === "posts" ? "active" : ""}`}
@@ -105,6 +106,24 @@ const GroupDetails = () => {
       </div>
       {activeTab === "posts" && (
         <div className="posts-section">
+          {isGroupPostsLoading ? (
+            <div>Loading posts...</div>
+          ) : (
+            <div className="posts-list-container">
+              <ul className="post-list">
+                {groupPosts && groupPosts.length > 0 ? (
+                  groupPosts?.map((post) => (
+                    <li key={post.id}>
+                      <Post post={post} groupId={groupIdNumber} />
+                    </li>
+                  ))
+                ) : (
+                  <div>There are no posts for this group</div>
+                )}
+              </ul>
+            </div>
+          )}
+
           <h3 className="create-post-title">Create New Post</h3>
           <form className="post-form" onSubmit={handleCreatePost}>
             <div>
@@ -130,29 +149,29 @@ const GroupDetails = () => {
               Create Post
             </button>
           </form>
-
-          <h2 className="section-title">Group Posts</h2>
-          {isGroupPostsLoading ? (
-            <div>Loading posts...</div>
-          ) : (
-            <div className="posts-list-container">
-              <ul className="post-list">
-                {groupPosts && groupPosts.length > 0 ? (
-                  groupPosts?.map((post) => (
-                    <li key={post.id}>
-                      <Post post={post} groupId={groupIdNumber} />
-                    </li>
-                  ))
-                ) : (
-                  <div>There are no posts for this group</div>
-                )}
-              </ul>
-            </div>
-          )}
         </div>
       )}
       {activeTab === "users" && (
         <div className="users-section">
+          {isGroupLoading ? (
+            <div>Loading users...</div>
+          ) : (
+            <ul className="user-list">
+              {group?.users.map((u) => (
+                <li key={u.id} className="user-item">
+                  - {u.name} ({u.email})
+                  {u.id !== user.id && (
+                    <button
+                      className="btn-remove"
+                      onClick={() => removeUser(u.id)}
+                    >
+                      Remove
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
           <h3 className="add-user-title">Add User to Group</h3>
           <form className="add-user-form" onSubmit={handleAddUser}>
             <div>
@@ -168,26 +187,6 @@ const GroupDetails = () => {
               Add User
             </button>
           </form>
-          <h2 className="section-title">Group Users</h2>
-          {isGroupLoading ? (
-            <div>Loading users...</div>
-          ) : (
-            <ul className="user-list">
-              {group?.users.map((u) => (
-                <li key={u.id} className="user-item">
-                  {u.name} ({u.email})
-                  {u.id !== user.id && (
-                    <button
-                      className="btn-remove"
-                      onClick={() => removeUser(u.id)}
-                    >
-                      Remove
-                    </button>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
       )}
     </div>
