@@ -41,10 +41,6 @@ const Groups = () => {
 
   return (
     <div className="groups-container">
-      <button className="btn" onClick={() => navigate("/home")}>
-        Home
-      </button>
-
       <h2 className="create-group-title">Create New Group</h2>
       <form className="create-group-form" onSubmit={handleCreateGroup}>
         <div>

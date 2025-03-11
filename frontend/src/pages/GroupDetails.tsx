@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../context/AuthContext";
 import Post from "../components/Post";
@@ -15,7 +15,6 @@ import "./GroupDetails.css";
 const GroupDetails = () => {
   const { groupId } = useParams();
   const groupIdNumber = Number(groupId);
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { user } = useAuth();
 
@@ -89,9 +88,6 @@ const GroupDetails = () => {
 
   return (
     <div className="group-details-container">
-      <button className="btn-back" onClick={() => navigate("/groups")}>
-        Back to Groups
-      </button>
       <h1 className="page-title">Group Details</h1>
       <div className="tabs">
         <span

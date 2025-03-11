@@ -1,6 +1,6 @@
 .group-details-container {
   background-color: #121212;
-  padding: 2rem;
+  padding: 4rem;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -137,24 +137,6 @@
 }
 
 .btn-remove:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
-
-.btn-back {
-  background: linear-gradient(45deg, #00ccff, #9933ff);
-  border: none;
-  color: #e0e0e0;
-  padding: 0.75rem 1.5rem;
-  margin-top: 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.btn-back:hover {
   transform: scale(1.05);
   opacity: 0.9;
 }
