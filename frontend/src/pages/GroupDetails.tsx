@@ -145,7 +145,7 @@ const GroupDetails = () => {
                 required
               />
             </div>
-            <button type="submit" className="btn-submit">
+            <button type="submit" className="btn">
               Create Post
             </button>
           </form>
@@ -183,7 +183,7 @@ const GroupDetails = () => {
                 required
               />
             </div>
-            <button type="submit" className="btn-submit">
+            <button type="submit" className="btn">
               Add User
             </button>
           </form>
