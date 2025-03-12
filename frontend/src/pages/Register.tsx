@@ -1,5 +1,5 @@
 import "./Register.css";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { register } from "../api/auth";
@@ -18,7 +18,7 @@ const Register = () => {
       navigate("/login");
     },
     onError: (error) => {
-      console.error("Register error:", error);
+      console.warn("Register error:", error);
     },
   });
 

@@ -46,6 +46,9 @@ const GroupDetails = () => {
       });
       setNewPost({ title: "", content: "" });
     },
+    onError: (error) => {
+      console.warn(error);
+    },
   });
 
   const { mutate: addNewUser } = useMutation({
@@ -56,6 +59,9 @@ const GroupDetails = () => {
       });
       setNewUserEmail("");
     },
+    onError: (error) => {
+      console.warn(error);
+    },
   });
 
   const { mutate: removeUser } = useMutation({
@@ -64,6 +70,9 @@ const GroupDetails = () => {
       queryClient.invalidateQueries({
         queryKey: ["group", groupIdNumber],
       });
+    },
+    onError: (error) => {
+      console.warn(error);
     },
   });
 

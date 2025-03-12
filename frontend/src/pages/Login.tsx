@@ -18,7 +18,7 @@ const Login = () => {
       refetch();
     },
     onError: (error) => {
-      console.error("Login error:", error);
+      console.warn("Login error:", error);
     },
   });
 

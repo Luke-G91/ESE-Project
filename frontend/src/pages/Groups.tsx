@@ -23,6 +23,9 @@ const Groups = () => {
       queryClient.invalidateQueries({ queryKey: ["groups", user?.id] });
       setNewGroup({ name: "", description: "" });
     },
+    onError: (error) => {
+      console.warn(error);
+    },
   });
 
   const handleCreateGroup = (e: FormEvent) => {
