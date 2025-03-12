@@ -12,12 +12,13 @@ import {
 import { createPost } from "../api/post";
 import "./GroupDetails.css";
 import { toast } from "react-toastify";
+import User from "../components/User";
 
 const GroupDetails = () => {
   const { groupId } = useParams();
   const groupIdNumber = Number(groupId);
   const queryClient = useQueryClient();
-  const { user } = useAuth();
+  const { user: currentUser } = useAuth();
 
   const [activeTab, setActiveTab] = useState("posts");
   const [newPost, setNewPost] = useState({ title: "", content: "" });
@@ -99,7 +100,11 @@ const GroupDetails = () => {
     addNewUser(newUserEmail);
   };
 
-  if (!groupIdNumber || !user) return <div>Group not found</div>;
+  const handleRemoveUser = (id: number) => {
+    removeUser(id);
+  };
+
+  if (!groupIdNumber || !currentUser) return <div>Group not found</div>;
 
   return (
     <div className="group-details-container">
@@ -125,17 +130,15 @@ const GroupDetails = () => {
             <div className="loading">Loading posts...</div>
           ) : (
             <div className="posts-list-container">
-              <ul className="post-list">
+              <div className="post-list">
                 {groupPosts && groupPosts.length > 0 ? (
                   groupPosts?.map((post) => (
-                    <li key={post.id}>
-                      <Post post={post} groupId={groupIdNumber} />
-                    </li>
+                    <Post post={post} groupId={groupIdNumber} />
                   ))
                 ) : (
                   <div>There are no posts for this group</div>
                 )}
-              </ul>
+              </div>
             </div>
           )}
 
@@ -172,18 +175,12 @@ const GroupDetails = () => {
             <div className="loading">Loading users...</div>
           ) : (
             <ul className="user-list">
-              {group?.users.map((u) => (
-                <li key={u.id} className="user-item">
-                  - {u.name} ({u.email})
-                  {u.id !== user.id && (
-                    <button
-                      className="btn-remove"
-                      onClick={() => removeUser(u.id)}
-                    >
-                      Remove
-                    </button>
-                  )}
-                </li>
+              {group?.users.map((user) => (
+                <User
+                  user={user}
+                  currentUser={currentUser}
+                  handleRemoveUser={handleRemoveUser}
+                />
               ))}
             </ul>
           )}

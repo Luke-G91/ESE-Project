@@ -1,14 +1,13 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../context/AuthContext";
 import { createGroup, getAllGroups } from "../api/group";
 import "./Groups.css";
 import { toast } from "react-toastify";
+import Group from "../components/Group";
 
 const Groups = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [newGroup, setNewGroup] = useState({ name: "", description: "" });
 
@@ -43,23 +42,16 @@ const Groups = () => {
     setNewGroup((prev) => ({ ...prev, [name]: value }));
   };
 
-  if (isLoading) return <div className="loading">Loading groups...</div>;
+  if (isLoading) {
+    return <div className="loading">Loading groups...</div>;
+  }
 
   return (
     <div className="groups-container">
       <h1 className="page-title">Your Groups</h1>
       <div className="groups-list">
         {groups && groups.length > 0 ? (
-          groups.map((group) => (
-            <div
-              key={group.id}
-              className="group-card"
-              onClick={() => navigate(`/group/${group.id}`)}
-            >
-              <h3 className="group-name">{group.name}</h3>
-              <p className="group-description">{group.description}</p>
-            </div>
-          ))
+          groups.map((group) => <Group group={group} />)
         ) : (
           <div>You a not a member of any groups yet</div>
         )}
