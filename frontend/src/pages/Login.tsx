@@ -3,6 +3,7 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../api/auth";
+import LoginRequest from "../api/models/auth/LoginRequest";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,7 +11,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const { mutate: loginUser, isError: isLoginError } = useMutation({
-    mutationFn: (data: { email: string; password: string }) => login(data),
+    mutationFn: (data: LoginRequest) => login(data),
     onSuccess: () => {
       navigate("/home");
     },
