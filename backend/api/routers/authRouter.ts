@@ -10,6 +10,12 @@ const isProd = process.env.NODE_ENV === "production";
 router.post("/register", async (req, res) => {
   let createUserRequest = req.body as CreateUserRequest;
 
+  const errors = userController.validateCreateUserRequest(createUserRequest);
+  if (errors.length > 0) {
+    res.status(400).json({ errors });
+    return;
+  }
+
   createUserRequest.password = await bcrypt.hash(
     createUserRequest.password,
     15,
@@ -25,6 +31,11 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const loginRequest = req.body as LoginRequest;
+
+  if (!loginRequest.email || !loginRequest.password) {
+    res.status(400).json({ error: "Invalid email or password" });
+    return;
+  }
 
   const user = await userController.loginUser(
     loginRequest.email,

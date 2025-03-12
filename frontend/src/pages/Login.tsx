@@ -53,7 +53,9 @@ const Login = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      {mutation.isError && <p className="login-error">Login failed</p>}
+      {mutation.isError && (
+        <p className="login-error">Invalid email or password</p>
+      )}
       <p className="login-register">
         Don't have an account?{" "}
         <span onClick={() => navigate("/register")}>Register here</span>
