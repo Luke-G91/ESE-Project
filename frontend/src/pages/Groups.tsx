@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../context/AuthContext";
 import { createGroup, getAllGroups } from "../api/group";
 import "./Groups.css";
+import { toast } from "react-toastify";
 
 const Groups = () => {
   const { user } = useAuth();
@@ -22,9 +23,11 @@ const Groups = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["groups", user?.id] });
       setNewGroup({ name: "", description: "" });
+      toast.success("Group created successfully");
     },
     onError: (error) => {
       console.warn(error);
+      toast.error("Failed to create group");
     },
   });
 

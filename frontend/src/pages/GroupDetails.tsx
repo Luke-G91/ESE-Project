@@ -11,6 +11,7 @@ import {
 } from "../api/group";
 import { createPost } from "../api/post";
 import "./GroupDetails.css";
+import { toast } from "react-toastify";
 
 const GroupDetails = () => {
   const { groupId } = useParams();
@@ -45,9 +46,11 @@ const GroupDetails = () => {
         queryKey: ["groupPosts", groupIdNumber],
       });
       setNewPost({ title: "", content: "" });
+      toast.success("Post created");
     },
     onError: (error) => {
       console.warn(error);
+      toast.error("Failed to create post");
     },
   });
 
@@ -58,9 +61,11 @@ const GroupDetails = () => {
         queryKey: ["group", groupIdNumber],
       });
       setNewUserEmail("");
+      toast.success("User added to group");
     },
     onError: (error) => {
       console.warn(error);
+      toast.error("Failed to add user to group");
     },
   });
 
@@ -73,6 +78,7 @@ const GroupDetails = () => {
     },
     onError: (error) => {
       console.warn(error);
+      toast.error("Failed to remove user from group");
     },
   });
 

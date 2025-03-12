@@ -11,20 +11,17 @@ const Login = () => {
   const navigate = useNavigate();
   const { refetch } = useAuth();
 
-  const mutation = useMutation({
+  const { mutate: loginUser, isError: isLoginError } = useMutation({
     mutationFn: (data: { email: string; password: string }) => login(data),
     onSuccess: () => {
       navigate("/home");
       refetch();
     },
-    onError: (error) => {
-      console.warn("Login error:", error);
-    },
   });
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
-    mutation.mutate({ email, password });
+    loginUser({ email, password });
   };
 
   return (
@@ -53,9 +50,7 @@ const Login = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      {mutation.isError && (
-        <p className="login-error">Invalid email or password</p>
-      )}
+      {isLoginError && <p className="login-error">Invalid email or password</p>}
       <p className="login-register">
         Don't have an account?{" "}
         <span onClick={() => navigate("/register")}>Register here</span>

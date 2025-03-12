@@ -3,6 +3,7 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { register } from "../api/auth";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -11,21 +12,19 @@ const Register = () => {
   const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
   const navigate = useNavigate();
 
-  const mutation = useMutation({
+  const { mutate: registerUser, isError: isRegisterError } = useMutation({
     mutationFn: (data: { email: string; name: string; password: string }) =>
       register(data),
     onSuccess: () => {
+      toast.success("User registered successfully");
       navigate("/login");
-    },
-    onError: (error) => {
-      console.warn("Register error:", error);
     },
   });
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (validatePassword()) {
-      mutation.mutate({ email, name, password });
+      registerUser({ email, name, password });
     }
   };
 
@@ -52,7 +51,7 @@ const Register = () => {
     }
 
     setPasswordErrors(errors);
-    return errors.length < 0;
+    return errors.length === 0;
   };
 
   return (
@@ -95,9 +94,7 @@ const Register = () => {
           {error}
         </p>
       ))}
-      {mutation.isError && (
-        <p className="register-error">Registration failed</p>
-      )}
+      {isRegisterError && <p className="register-error">Registration failed</p>}
       <p className="login-register">
         Already have an account?{" "}
         <span onClick={() => navigate("/login")}>Login here</span>
