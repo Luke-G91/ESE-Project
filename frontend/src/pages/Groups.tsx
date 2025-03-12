@@ -41,9 +41,23 @@ const Groups = () => {
 
   return (
     <div className="groups-container">
-      <button className="btn" onClick={() => navigate("/home")}>
-        Home
-      </button>
+      <h1 className="page-title">Your Groups</h1>
+      <div className="groups-list">
+        {groups && groups.length > 0 ? (
+          groups.map((group) => (
+            <div
+              key={group.id}
+              className="group-card"
+              onClick={() => navigate(`/group/${group.id}`)}
+            >
+              <h3 className="group-name">{group.name}</h3>
+              <p className="group-description">{group.description}</p>
+            </div>
+          ))
+        ) : (
+          <div>You a not a member of any groups yet</div>
+        )}
+      </div>
 
       <h2 className="create-group-title">Create New Group</h2>
       <form className="create-group-form" onSubmit={handleCreateGroup}>
@@ -70,20 +84,6 @@ const Groups = () => {
           Create Group
         </button>
       </form>
-
-      <h1 className="page-title">Your Groups</h1>
-      <div className="groups-list">
-        {groups?.map((group) => (
-          <div
-            key={group.id}
-            className="group-card"
-            onClick={() => navigate(`/group/${group.id}`)}
-          >
-            <h3 className="group-name">{group.name}</h3>
-            <p className="group-description">{group.description}</p>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };

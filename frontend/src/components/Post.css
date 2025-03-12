@@ -21,10 +21,6 @@
   border-radius: inherit;
 }
 
-.post-card:hover {
-  transform: translateY(-5px);
-}
-
 .post-header {
   display: flex;
   justify-content: space-between;

@@ -1,3 +1,4 @@
+import "./Register.css";
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
@@ -26,9 +27,11 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="register-container">
+      <div className="register-header">
+        <h1 className="register-title">Register</h1>
+      </div>
+      <form className="register-form" onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
           <input
@@ -58,15 +61,12 @@ const Register = () => {
         </div>
         <button type="submit">Register</button>
       </form>
-      {mutation.isError && <p style={{ color: "red" }}>Registration failed</p>}
-      <p>
+      {mutation.isError && (
+        <p className="register-error">Registration failed</p>
+      )}
+      <p className="register-login">
         Already have an account?{" "}
-        <span
-          style={{ color: "blue", cursor: "pointer" }}
-          onClick={() => navigate("/login")}
-        >
-          Login here
-        </span>
+        <span onClick={() => navigate("/login")}>Login here</span>
       </p>
     </div>
   );

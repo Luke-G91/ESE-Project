@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "../context/AuthContext";
 import Post from "../components/Post";
@@ -15,7 +15,6 @@ import "./GroupDetails.css";
 const GroupDetails = () => {
   const { groupId } = useParams();
   const groupIdNumber = Number(groupId);
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { user } = useAuth();
 
@@ -53,7 +52,7 @@ const GroupDetails = () => {
     mutationFn: (email: string) => addUserToGroup(groupIdNumber, email),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["groupUsers", groupIdNumber],
+        queryKey: ["group", groupIdNumber],
       });
       setNewUserEmail("");
     },
@@ -63,7 +62,7 @@ const GroupDetails = () => {
     mutationFn: (userId: number) => deleteUserFromGroup(groupIdNumber, userId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["groupUsers", groupIdNumber],
+        queryKey: ["group", groupIdNumber],
       });
     },
   });
@@ -89,10 +88,8 @@ const GroupDetails = () => {
 
   return (
     <div className="group-details-container">
-      <button className="btn-back" onClick={() => navigate("/groups")}>
-        Back to Groups
-      </button>
-      <h1 className="page-title">Group Details</h1>
+      <h1 className="page-title">{group?.name}</h1>
+      <div>{group?.description}</div>
       <div className="tabs">
         <span
           className={`tab ${activeTab === "posts" ? "active" : ""}`}
@@ -109,6 +106,24 @@ const GroupDetails = () => {
       </div>
       {activeTab === "posts" && (
         <div className="posts-section">
+          {isGroupPostsLoading ? (
+            <div className="loading">Loading posts...</div>
+          ) : (
+            <div className="posts-list-container">
+              <ul className="post-list">
+                {groupPosts && groupPosts.length > 0 ? (
+                  groupPosts?.map((post) => (
+                    <li key={post.id}>
+                      <Post post={post} groupId={groupIdNumber} />
+                    </li>
+                  ))
+                ) : (
+                  <div>There are no posts for this group</div>
+                )}
+              </ul>
+            </div>
+          )}
+
           <h3 className="create-post-title">Create New Post</h3>
           <form className="post-form" onSubmit={handleCreatePost}>
             <div>
@@ -130,52 +145,21 @@ const GroupDetails = () => {
                 required
               />
             </div>
-            <button type="submit" className="btn-submit">
+            <button type="submit" className="btn">
               Create Post
             </button>
           </form>
-
-          <h2 className="section-title">Group Posts</h2>
-          {isGroupPostsLoading ? (
-            <div>Loading posts...</div>
-          ) : (
-            <div className="posts-list-container">
-              <ul className="post-list">
-                {groupPosts?.map((post) => (
-                  <li key={post.id}>
-                    <Post post={post} groupId={groupIdNumber} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
       )}
       {activeTab === "users" && (
         <div className="users-section">
-          <h3 className="add-user-title">Add User to Group</h3>
-          <form className="add-user-form" onSubmit={handleAddUser}>
-            <div>
-              <label>Email:</label>
-              <input
-                type="email"
-                value={newUserEmail}
-                onChange={(e) => setNewUserEmail(e.target.value)}
-                required
-              />
-            </div>
-            <button type="submit" className="btn-submit">
-              Add User
-            </button>
-          </form>
-          <h2 className="section-title">Group Users</h2>
           {isGroupLoading ? (
-            <div>Loading users...</div>
+            <div className="loading">Loading users...</div>
           ) : (
             <ul className="user-list">
               {group?.users.map((u) => (
                 <li key={u.id} className="user-item">
-                  {u.name} ({u.email})
+                  - {u.name} ({u.email})
                   {u.id !== user.id && (
                     <button
                       className="btn-remove"
@@ -188,6 +172,21 @@ const GroupDetails = () => {
               ))}
             </ul>
           )}
+          <h3 className="add-user-title">Add User to Group</h3>
+          <form className="add-user-form" onSubmit={handleAddUser}>
+            <div>
+              <label>Email:</label>
+              <input
+                type="email"
+                value={newUserEmail}
+                onChange={(e) => setNewUserEmail(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" className="btn">
+              Add User
+            </button>
+          </form>
         </div>
       )}
     </div>

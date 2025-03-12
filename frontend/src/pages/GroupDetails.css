@@ -1,6 +1,6 @@
 .group-details-container {
   background-color: #121212;
-  padding: 2rem;
+  padding: 4rem;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -15,7 +15,8 @@
 
 .tabs {
   display: flex;
-  margin-bottom: 2rem;
+  justify-content: center;
+  margin: 1.5rem 0;
 }
 
 .tab {
@@ -25,6 +26,11 @@
   margin-right: 2rem;
   cursor: pointer;
   transition: border-bottom 0.3s ease;
+  text-align: center;
+}
+
+.tab:last-child {
+  margin-right: 0;
 }
 
 .tab:hover {
@@ -69,17 +75,16 @@
 .create-post-title,
 .add-user-title {
   font-size: 1.5rem;
-  margin-top: 2rem;
+  margin-bottom: 0;
 }
 
 .post-form,
 .add-user-form {
   background-color: #1e1e1e;
-  padding: 1.5rem;
+  padding: 2rem;
   border-radius: 8px;
   width: 100%;
   max-width: 600px;
-  margin-top: 1rem;
 }
 
 .post-form input,
@@ -99,24 +104,6 @@
 .add-user-form input:focus {
   outline: none;
   border: 2px solid #00ccff;
-}
-
-.btn-submit {
-  background: linear-gradient(45deg, #00ccff, #9933ff);
-  border: none;
-  color: #e0e0e0;
-  padding: 0.75rem 1.5rem;
-  margin-top: 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.btn-submit:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
 }
 
 .user-item {
@@ -139,31 +126,4 @@
 .btn-remove:hover {
   transform: scale(1.05);
   opacity: 0.9;
-}
-
-.btn-back {
-  background: linear-gradient(45deg, #00ccff, #9933ff);
-  border: none;
-  color: #e0e0e0;
-  padding: 0.75rem 1.5rem;
-  margin-top: 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.btn-back:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
-
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  color: #e0e0e0;
-  font-family: "Roboto Mono", monospace;
 }
