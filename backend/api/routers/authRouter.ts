@@ -69,7 +69,7 @@ router.get("/userInfo", async (req, res) => {
     const user = await userController.findUserByToken(token);
 
     if (!user) {
-      res.status(401).json({ error: "User not found" });
+      res.status(401).json({ error: "Invalid or expired token" });
       return;
     }
 

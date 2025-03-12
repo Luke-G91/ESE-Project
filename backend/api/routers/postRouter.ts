@@ -10,7 +10,7 @@ const router = express.Router();
 router.get("/", authenticateToken, async (req, res) => {
   const user = req.user;
   if (!user) {
-    res.status(400).json({ error: "Failed to fetch posts" });
+    res.status(401).json({ error: "Unauthorized" });
     return;
   }
 
@@ -27,7 +27,7 @@ router.post("/", authenticateToken, async (req, res) => {
 
   const user = req.user;
   if (!user) {
-    res.status(400).json({ error: "Failed to create post" });
+    res.status(401).json({ error: "Unauthorized" });
     return;
   }
 
@@ -36,7 +36,7 @@ router.post("/", authenticateToken, async (req, res) => {
     user.id,
   );
   if (!userGroup) {
-    res.status(400).json({ error: "User is not in group" });
+    res.status(403).json({ error: "Forbidden" });
     return;
   }
 
