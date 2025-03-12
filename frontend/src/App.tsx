@@ -13,7 +13,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import GroupDetails from "./pages/GroupDetails";
 import Groups from "./pages/Groups";
 import "./App.css";
-import Navbar from "./components/Navbar";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +28,6 @@ function App() {
               path="/home"
               element={
                 <ProtectedRoute>
-                  <Navbar />
                   <Home />
                 </ProtectedRoute>
               }
@@ -38,7 +36,6 @@ function App() {
               path="/groups"
               element={
                 <ProtectedRoute>
-                  <Navbar />
                   <Groups />
                 </ProtectedRoute>
               }
@@ -47,7 +44,6 @@ function App() {
               path="/group/:groupId"
               element={
                 <ProtectedRoute>
-                  <Navbar />
                   <GroupDetails />
                 </ProtectedRoute>
               }
