@@ -21,65 +21,64 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <Router>
-          <>
-            <ToastContainer
-              autoClose={3000}
-              closeOnClick={true}
-              pauseOnHover
-              theme="dark"
-              transition={Zoom}
-              pauseOnFocusLoss={false}
+      <Router>
+        <>
+          <ToastContainer
+            autoClose={3000}
+            closeOnClick={true}
+            pauseOnHover
+            theme="dark"
+            transition={Zoom}
+            pauseOnFocusLoss={false}
+          />
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route
+              path="/*"
+              element={
+                <AuthProvider>
+                  <ProtectedRoutes />
+                </AuthProvider>
+              }
             />
-            <Routes>
-              <Route
-                path="/login"
-                element={
-                  <>
-                    <Login />
-                  </>
-                }
-              />
-              <Route
-                path="/register"
-                element={
-                  <>
-                    <Register />
-                  </>
-                }
-              />
-              <Route
-                path="/home"
-                element={
-                  <ProtectedRoute>
-                    <Home />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/groups"
-                element={
-                  <ProtectedRoute>
-                    <Groups />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/group/:groupId"
-                element={
-                  <ProtectedRoute>
-                    <GroupDetails />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="*" element={<Navigate to="/home" replace />} />
-            </Routes>
-          </>
-        </Router>
-      </AuthProvider>
+          </Routes>
+        </>
+      </Router>
     </QueryClientProvider>
   );
 }
+
+const ProtectedRoutes = () => {
+  return (
+    <Routes>
+      <Route
+        path="/home"
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/groups"
+        element={
+          <ProtectedRoute>
+            <Groups />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/group/:groupId"
+        element={
+          <ProtectedRoute>
+            <GroupDetails />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/home" replace />} />
+    </Routes>
+  );
+};
 
 export default App;

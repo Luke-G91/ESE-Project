@@ -3,19 +3,16 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../api/auth";
-import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { refetch } = useAuth();
 
   const { mutate: loginUser, isError: isLoginError } = useMutation({
     mutationFn: (data: { email: string; password: string }) => login(data),
     onSuccess: () => {
       navigate("/home");
-      refetch();
     },
   });
 
