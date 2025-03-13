@@ -6,13 +6,14 @@ import UserViewModel from "./models/user/UserViewModel";
 const baseUrl = import.meta.env.VITE_API_URL;
 
 export const login = async (data: LoginRequest) => {
-  const response = await axios.post(`${baseUrl}/login`, data, {
+  await axios.post(`${baseUrl}/login`, data, {
     withCredentials: true,
   });
-  return response.data;
 };
 
-export const register = async (data: RegisterRequest) => {
+export const register = async (
+  data: RegisterRequest,
+): Promise<UserViewModel> => {
   const response = await axios.post(`${baseUrl}/register`, data, {
     withCredentials: true,
   });

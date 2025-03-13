@@ -3,27 +3,55 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { register } from "../api/auth";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
   const navigate = useNavigate();
 
-  const mutation = useMutation({
+  const { mutate: registerUser, isError: isRegisterError } = useMutation({
     mutationFn: (data: { email: string; name: string; password: string }) =>
       register(data),
     onSuccess: () => {
+      toast.success("User registered successfully");
       navigate("/login");
-    },
-    onError: (error) => {
-      console.error("Register error:", error);
     },
   });
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    mutation.mutate({ email, name, password });
+    if (validatePassword()) {
+      registerUser({ email, name, password });
+    }
+  };
+
+  const validatePassword = () => {
+    const errors: string[] = [];
+    const hasLowerCase = /[a-z]/.test(password);
+    if (!hasLowerCase) {
+      errors.push("Password must contain at least one lowercase letter");
+    }
+
+    const hasUpperCase = /[A-Z]/.test(password);
+    if (!hasUpperCase) {
+      errors.push("Password must contain at least one uppercase letter");
+    }
+
+    const hasNumber = /\d/.test(password);
+    if (!hasNumber) {
+      errors.push("Password must contain at least one number");
+    }
+
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    if (!hasSpecialChar) {
+      errors.push("Password must contain at least one special character");
+    }
+
+    setPasswordErrors(errors);
+    return errors.length === 0;
   };
 
   return (
@@ -61,10 +89,13 @@ const Register = () => {
         </div>
         <button type="submit">Register</button>
       </form>
-      {mutation.isError && (
-        <p className="register-error">Registration failed</p>
-      )}
-      <p className="register-login">
+      {passwordErrors.map((error, index) => (
+        <p key={index} className="register-error">
+          {error}
+        </p>
+      ))}
+      {isRegisterError && <p className="register-error">Registration failed</p>}
+      <p className="login-register">
         Already have an account?{" "}
         <span onClick={() => navigate("/login")}>Login here</span>
       </p>

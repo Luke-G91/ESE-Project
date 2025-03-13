@@ -3,28 +3,23 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../api/auth";
-import { useAuth } from "../context/AuthContext";
+import LoginRequest from "../api/models/auth/LoginRequest";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { refetch } = useAuth();
 
-  const mutation = useMutation({
-    mutationFn: (data: { email: string; password: string }) => login(data),
+  const { mutate: loginUser, isError: isLoginError } = useMutation({
+    mutationFn: (data: LoginRequest) => login(data),
     onSuccess: () => {
       navigate("/home");
-      refetch();
-    },
-    onError: (error) => {
-      console.error("Login error:", error);
     },
   });
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
-    mutation.mutate({ email, password });
+    loginUser({ email, password });
   };
 
   return (
@@ -53,7 +48,7 @@ const Login = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      {mutation.isError && <p className="login-error">Login failed</p>}
+      {isLoginError && <p className="login-error">Invalid email or password</p>}
       <p className="login-register">
         Don't have an account?{" "}
         <span onClick={() => navigate("/register")}>Register here</span>

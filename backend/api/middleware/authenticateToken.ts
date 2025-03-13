@@ -1,8 +1,7 @@
-import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import { UserViewModel } from "../models/user/UserViewModel.js";
+import * as userController from "../controllers/userController.js";
 
-export const authenticateToken = (
+export const authenticateToken = async (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -14,11 +13,8 @@ export const authenticateToken = (
     return;
   }
 
-  const decoded = jwt.verify(
-    token,
-    process.env.JWT_SECRET || "",
-  ) as UserViewModel;
+  const user = await userController.findUserByToken(token);
 
-  req.user = decoded;
+  req.user = user;
   next();
 };

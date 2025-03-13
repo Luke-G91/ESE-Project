@@ -1,0 +1,24 @@
+.group-card {
+  background-color: #1e1e1e;
+  padding: 0.25rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1.5rem;
+}
+
+.group-card:hover {
+  box-shadow: 0 8px 15px rgba(0, 204, 255, 0.6);
+}
+
+.group-name {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: #00ccff;
+}
+
+.group-description {
+  font-size: 1rem;
+  color: #e0e0e0;
+}

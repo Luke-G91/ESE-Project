@@ -11,7 +11,7 @@ const router = express.Router();
 router.get("/", authenticateToken, async (req, res) => {
   const user = req.user;
   if (!user) {
-    res.status(400).json({ error: "Failed to fetch groups" });
+    res.status(401).json({ error: "Unauthorized" });
     return;
   }
 
@@ -26,11 +26,16 @@ router.get("/", authenticateToken, async (req, res) => {
 router.get("/:groupId", authenticateToken, async (req, res) => {
   const user = req.user;
   if (!user) {
-    res.status(400).json({ error: "Failed to fetch groups" });
+    res.status(401).json({ error: "Unauthorized" });
     return;
   }
 
-  const groupId: number = Number(req.params.groupId);
+  const groupId = Number(req.params.groupId);
+  if (!groupId) {
+    res.status(400).json({ error: "Failed to fetch group" });
+    return;
+  }
+
   const userGroup = await groupController.findUserGroupByGroupIdAndUserId(
     groupId,
     user.id,
@@ -51,7 +56,7 @@ router.get("/:groupId", authenticateToken, async (req, res) => {
 router.get("/:groupId/post", authenticateToken, async (req, res) => {
   const user = req.user;
   if (!user) {
-    res.status(400).json({ error: "Failed to fetch groups" });
+    res.status(401).json({ error: "Unauthorized" });
     return;
   }
 
@@ -78,7 +83,7 @@ router.post("/", authenticateToken, async (req, res) => {
 
   const user = req.user;
   if (!user) {
-    res.status(400).json({ error: "Failed to fetch groups" });
+    res.status(401).json({ error: "Unauthorized" });
     return;
   }
 
@@ -93,11 +98,16 @@ router.post("/", authenticateToken, async (req, res) => {
 
 router.post("/:groupId/user", authenticateToken, async (req, res) => {
   const { userEmail } = req.body as AddUserToGroupRequest;
+
   const groupId = Number(req.params.groupId);
+  if (!groupId) {
+    res.status(400).json({ error: "Group does not exist" });
+    return;
+  }
 
   const user = req.user;
   if (!user) {
-    res.status(403).json({ error: "Forbidden" });
+    res.status(401).json({ error: "Unauthorized" });
     return;
   }
 
@@ -131,7 +141,7 @@ router.delete("/:groupId/user/:userId", authenticateToken, async (req, res) => {
 
   const user = req.user;
   if (!user) {
-    res.status(403).json({ error: "Forbidden" });
+    res.status(401).json({ error: "Unauthorized" });
     return;
   }
 
@@ -160,7 +170,7 @@ router.delete("/:groupId/user/:userId", authenticateToken, async (req, res) => {
       message: "User removed from group successfully",
     });
   } catch (error) {
-    res.status(400).json({ error: "Failed to remove user from group " });
+    res.status(400).json({ error: "Failed to remove user from group" });
   }
 });
 
