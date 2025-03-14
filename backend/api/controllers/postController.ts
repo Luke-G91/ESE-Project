@@ -10,6 +10,11 @@ export const findAllPosts = async () => {
   return posts;
 };
 
+export const findPostById = async (id: number) => {
+  const post: Post | null = await prisma.post.findFirst({ where: { id } });
+  return post;
+};
+
 export const createPost = async (post: CreatePostRequest, authorId: number) => {
   const newPost: Post = await prisma.post.create({
     data: {

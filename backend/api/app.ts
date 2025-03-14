@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routers/authRouter.js";
 import postRouter from "./routers/postRouter.js";
 import groupRouter from "./routers/groupRouter.js";
+import commentRouter from "./routers/commentRouter.js";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(cookieParser());
 
 app.use("/", authRouter);
 app.use("/post", postRouter);
+app.use("/post", commentRouter);
 app.use("/group", groupRouter);
 
 app.listen(port, () => {
