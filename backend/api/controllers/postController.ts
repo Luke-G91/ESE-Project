@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { CreatePostRequest } from "../models/post/CreatePostRequest.js";
 import { Post } from "../models/post/Post.js";
 import { PostViewModel } from "../models/post/PostViewModel.js";
+import { PostDetails } from "../models/post/PostDetails.js";
 
 const prisma = new PrismaClient();
 
@@ -13,6 +14,63 @@ export const findAllPosts = async () => {
 export const findPostById = async (id: number) => {
   const post: Post | null = await prisma.post.findFirst({ where: { id } });
   return post;
+};
+
+export const findPostDetailsById = async (id: number, userId: number) => {
+  const post = await prisma.post.findFirst({
+    where: {
+      id,
+    },
+    include: {
+      author: {
+        select: { name: true },
+      },
+      chatGroup: {
+        select: { name: true },
+      },
+      _count: {
+        select: { PostLike: true },
+      },
+      // PostLikes from current user
+      PostLike: {
+        where: { userId },
+        select: { id: true },
+      },
+      comments: {
+        include: {
+          user: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: { createdAt: "desc" },
+  });
+
+  if (!post) {
+    return null;
+  }
+
+  const postDetails: PostDetails = {
+    id: post.id,
+    title: post.title,
+    content: post.content,
+    createdAt: post.createdAt,
+    author: post.author.name,
+    group: post.chatGroup.name,
+    likeCount: post._count.PostLike,
+    likedByCurrentUser: post.PostLike.length > 0,
+    comments: post.comments.map((comment) => ({
+      id: comment.id,
+      content: comment.content,
+      createdAt: comment.createdAt,
+      author: comment.user.name,
+    })),
+  };
+
+  return postDetails;
 };
 
 export const createPost = async (post: CreatePostRequest, authorId: number) => {

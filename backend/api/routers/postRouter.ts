@@ -22,6 +22,46 @@ router.get("/", authenticateToken, async (req, res) => {
   }
 });
 
+router.get("/:postId", authenticateToken, async (req, res) => {
+  const user = req.user;
+  if (!user) {
+    res.status(401).json({ error: "Unauthorized" });
+    return;
+  }
+
+  const postId = Number(req.params.postId);
+  if (!postId) {
+    res.status(400).json({ error: "Failed to get comments" });
+    return;
+  }
+
+  const post = await postController.findPostById(postId);
+  if (!post) {
+    res.status(404).json({ error: "Post not found" });
+    return;
+  }
+
+  const group = await groupController.findGroupById(post.chatGroupId);
+  const userIsInGroup = group?.users.some(
+    (groupUser) => groupUser.id === user.id,
+  );
+  if (!userIsInGroup) {
+    res.status(403).json({ error: "Forbidden" });
+    return;
+  }
+
+  try {
+    const postDetails = await postController.findPostDetailsById(
+      post.id,
+      user.id,
+    );
+    res.json(postDetails);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error: "Failed to get post details" });
+  }
+});
+
 router.post("/", authenticateToken, async (req, res) => {
   const createPostRequest = req.body as CreatePostRequest;
 
