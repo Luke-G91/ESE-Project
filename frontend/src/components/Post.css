@@ -74,7 +74,7 @@
   align-items: center;
 }
 
-.like-button {
+.action-button {
   background: linear-gradient(45deg, #00ccff, #9933ff);
   border: none;
   border-radius: 50px;
@@ -90,12 +90,12 @@
   letter-spacing: 0.5px;
 }
 
-.like-button:hover {
+.action-button:hover {
   transform: scale(1.05);
   box-shadow: 0 0 15px rgba(0, 204, 255, 0.6);
 }
 
-.like-button:focus {
+.action-button:focus {
   outline: none;
 }
 
