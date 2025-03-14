@@ -47,35 +47,52 @@ const PostDetail = () => {
   if (isPostLoading || !post) {
     return <div>Loading post...</div>;
   }
-
   return (
     <div className="post-detail-container">
-      <div className="post-detail-header">
-        <h1>{post.title}</h1>
-        <p>By {post.author}</p>
-        <p>{post.content}</p>
-      </div>
-
-      <div className="comments-section">
-        <h2>Comments</h2>
-        {post.comments.map((comment) => (
-          <div key={comment.id} className="comment-card">
-            <p>{comment.content}</p>
-            <p>Commented by {comment.author}</p>
+      <div className="post-detail-card">
+        <div className="post-detail-header">
+          <h1 className="post-detail-title">{post.title}</h1>
+          <div className="post-detail-meta">
+            <span>Posted by {post.author}</span>
+            <span className="post-detail-date">
+              {new Date(post.createdAt).toLocaleString()}
+            </span>
           </div>
-        ))}
+        </div>
+        <div className="post-detail-body">
+          <p className="post-detail-content">{post.content}</p>
+        </div>
+        <div className="post-detail-comments-section">
+          <h2>Comments</h2>
+          {post.comments.map((comment) => (
+            <div key={comment.id} className="post-detail-comment-card">
+              <div className="post-detail-comment-header">
+                <span className="post-detail-comment-author">
+                  {comment.author}
+                </span>
+                <span className="post-detail-comment-date">
+                  {new Date(comment.createdAt).toLocaleString()}
+                </span>
+              </div>
+              <p className="post-detail-comment-content">{comment.content}</p>
+            </div>
+          ))}
 
-        <form className="comment-form" onSubmit={handleCommentSubmit}>
-          <textarea
-            name="comment"
-            value={newComment}
-            onChange={handleCommentChange}
-            required
-          />
-          <button type="submit" className="btn">
-            Add Comment
-          </button>
-        </form>
+          <form
+            className="post-detail-comment-form"
+            onSubmit={handleCommentSubmit}
+          >
+            <textarea
+              name="comment"
+              value={newComment}
+              onChange={handleCommentChange}
+              required
+            />
+            <button type="submit" className="post-detail-btn">
+              Add Comment
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
