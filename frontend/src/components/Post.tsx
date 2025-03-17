@@ -2,6 +2,7 @@ import { PostViewModel } from "../api/models/post/PostViewModel";
 import { createPostLike, deletePostLike } from "../api/post";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import "./Post.css";
+import { useNavigate } from "react-router-dom";
 
 interface PostProps {
   post: PostViewModel;
@@ -10,6 +11,7 @@ interface PostProps {
 
 const Post = ({ post, groupId = null }: PostProps) => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { mutate: toggleLike } = useMutation({
     mutationFn: async () => {
@@ -45,7 +47,13 @@ const Post = ({ post, groupId = null }: PostProps) => {
           {!groupId && <span className="post-group"> in {post.group}</span>}
         </div>
         <div className="post-actions">
-          <button className="like-button" onClick={() => toggleLike()}>
+          <button
+            className="action-button"
+            onClick={() => navigate(`/post/${post.id}`)}
+          >
+            Comments
+          </button>
+          <button className="action-button" onClick={() => toggleLike()}>
             {post.likedByCurrentUser ? "Unlike" : "Like"}
           </button>
           <span className="like-count">{post.likeCount} Likes</span>

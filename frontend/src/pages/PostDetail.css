@@ -1,0 +1,125 @@
+.post-detail-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 6rem;
+  min-height: 100vh;
+}
+
+.post-detail-card {
+  background: #1e1e1e;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  max-width: 800px;
+  width: 100%;
+}
+
+.post-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.post-detail-title {
+  margin: 0;
+  font-size: 2rem;
+  color: #00ccff;
+}
+
+.post-detail-meta {
+  color: #b0b0b0;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5rem;
+}
+
+.post-detail-date {
+  font-size: 0.8rem;
+  color: #b0b0b0;
+}
+
+.post-detail-body {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.post-detail-content {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #e0e0e0;
+}
+
+.post-detail-comments-section {
+  margin-top: 1.5rem;
+}
+
+.post-detail-comment-card {
+  background-color: #282828;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.post-detail-comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.post-detail-comment-author {
+  color: #9933ff;
+  font-weight: bold;
+}
+
+.post-detail-comment-date {
+  font-size: 0.8rem;
+  color: #b0b0b0;
+}
+
+.post-detail-comment-content {
+  font-size: 1rem;
+  color: #e0e0e0;
+}
+
+.post-detail-comment-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-detail-comment-form textarea {
+  width: 95%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  border: none;
+  background-color: #333;
+  color: #e0e0e0;
+  resize: none;
+}
+
+.post-detail-btn {
+  align-self: flex-end;
+  background: linear-gradient(45deg, #00ccff, #9933ff);
+  border: none;
+  border-radius: 50px;
+  color: #e0e0e0;
+  padding: 0.5rem 1.25rem;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.post-detail-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(0, 204, 255, 0.6);
+}
+
+.post-detail-btn:focus {
+  outline: none;
+}

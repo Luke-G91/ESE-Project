@@ -15,6 +15,7 @@ import Groups from "./pages/Groups";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import { Zoom } from "react-toastify/unstyled";
+import PostDetail from "./pages/PostDetail";
 
 const queryClient = new QueryClient();
 
@@ -73,6 +74,14 @@ const ProtectedRoutes = () => {
         element={
           <ProtectedRoute>
             <GroupDetails />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/post/:postId"
+        element={
+          <ProtectedRoute>
+            <PostDetail />
           </ProtectedRoute>
         }
       />

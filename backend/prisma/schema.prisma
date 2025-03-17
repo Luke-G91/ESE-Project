@@ -18,6 +18,7 @@ model User {
   chatGroups     ChatGroup[]     @relation("UserChatGroups")
   userChatGroups UserChatGroup[]
   PostLike       PostLike[]
+  comments       Comment[]
 }
 
 model ChatGroup {
@@ -54,6 +55,7 @@ model Post {
   chatGroupId Int
   chatGroup   ChatGroup  @relation(fields: [chatGroupId], references: [id], onDelete: Cascade)
   PostLike    PostLike[]
+  comments    Comment[]
 }
 
 model PostLike {
@@ -65,4 +67,16 @@ model PostLike {
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@unique([userId, postId])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  postId Int
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 }

@@ -105,25 +105,3 @@
   outline: none;
   border: 2px solid #00ccff;
 }
-
-.user-item {
-  margin-bottom: 1rem;
-}
-
-.btn-remove {
-  background: linear-gradient(45deg, #ff6666, #ff0033);
-  border: none;
-  color: #e0e0e0;
-  padding: 0.5rem 1rem;
-  margin-left: 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
-}
-
-.btn-remove:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
