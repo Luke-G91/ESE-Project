@@ -39,6 +39,7 @@ router.get("/:groupId", authenticateToken, async (req, res) => {
     return;
   }
 
+  // validate user is in the group
   const userGroup = await groupController.findUserGroupByGroupIdAndUserId(
     groupId,
     user.id,
@@ -121,6 +122,7 @@ router.post("/:groupId/user", authenticateToken, async (req, res) => {
     return;
   }
 
+  // validate user is in the group
   const userGroup = await groupController.findUserGroupByGroupIdAndUserId(
     groupId,
     user.id,
@@ -159,6 +161,7 @@ router.delete("/:groupId/user/:userId", authenticateToken, async (req, res) => {
     return;
   }
 
+  // validate user is in the group
   const userGroup = await groupController.findUserGroupByGroupIdAndUserId(
     groupId,
     user.id,
