@@ -10,5 +10,8 @@
       "src": "/api/(.*)",
       "dest": "/api/app.ts"
     }
-  ]
+  ],
+  "github": {
+    "enabled": false
+  }
 }

@@ -22,6 +22,9 @@ const Post = ({ post, groupId = null }: PostProps) => {
       }
     },
     onSuccess: () => {
+      // invalidated queries to get most recent data after an update
+      // if the post is displayed on group page it uses a different endpoint
+      // so different query to be invalidated
       if (groupId) {
         queryClient.invalidateQueries({ queryKey: ["groupPosts", groupId] });
         return;

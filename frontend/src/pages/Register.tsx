@@ -21,6 +21,7 @@ const Register = () => {
     },
   });
 
+  // prevent default to stop form submissions from sending default form requests
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (validatePassword()) {

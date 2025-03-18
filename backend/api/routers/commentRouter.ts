@@ -14,6 +14,8 @@ router.get("/:postId/comment", authenticateToken, async (req, res) => {
     return;
   }
 
+  // as the id is a query parameter it is a string
+  // however it is needed as a number
   const postId = Number(req.params.postId);
   if (!postId) {
     res.status(400).json({ error: "Failed to get comments" });
@@ -39,7 +41,7 @@ router.get("/:postId/comment", authenticateToken, async (req, res) => {
     const comments = await commentController.findAllCommentsForPost(post.id);
     res.json(comments);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json({ error: "Failed to get comments" });
   }
 });
@@ -53,6 +55,8 @@ router.post("/:postId/comment", authenticateToken, async (req, res) => {
     return;
   }
 
+  // as the id is a query parameter it is a string
+  // however it is needed as a number
   const postId = Number(req.params.postId);
   if (!postId) {
     res.status(400).json({ error: "Failed to create comment" });
@@ -82,7 +86,7 @@ router.post("/:postId/comment", authenticateToken, async (req, res) => {
     );
     res.json({ message: "Comment created successfully", newComment });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(400).json({ error: "Failed to create comment" });
   }
 });

@@ -16,6 +16,7 @@ export const createPostLike = async (postId: number, userId: number) => {
 export const deletePostLike = async (postId: number, userId: number) => {
   return await prisma.postLike.delete({
     where: {
+      // unique key on postLike
       userId_postId: {
         userId: userId,
         postId: postId,

@@ -17,6 +17,7 @@ const Login = () => {
     },
   });
 
+  // prevent default to stop form submissions from sending default form requests
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
     loginUser({ email, password });

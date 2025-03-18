@@ -55,35 +55,6 @@
   margin-top: 1.5rem;
 }
 
-.post-detail-comment-card {
-  background-color: #282828;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-}
-
-.post-detail-comment-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.post-detail-comment-author {
-  color: #9933ff;
-  font-weight: bold;
-}
-
-.post-detail-comment-date {
-  font-size: 0.8rem;
-  color: #b0b0b0;
-}
-
-.post-detail-comment-content {
-  font-size: 1rem;
-  color: #e0e0e0;
-}
-
 .post-detail-comment-form {
   display: flex;
   flex-direction: column;

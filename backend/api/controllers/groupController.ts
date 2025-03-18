@@ -57,6 +57,7 @@ export const findGroupById = async (
 ): Promise<GroupDetails | null> => {
   const group = await prisma.chatGroup.findFirst({
     where: { id },
+    // user is linked to group through userChatGroups table
     include: {
       userChatGroups: {
         include: {

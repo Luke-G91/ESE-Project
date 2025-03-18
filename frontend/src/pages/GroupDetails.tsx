@@ -27,12 +27,14 @@ const GroupDetails = () => {
   const { data: group, isLoading: isGroupLoading } = useQuery({
     queryKey: ["group", groupIdNumber],
     queryFn: () => getGroup(groupIdNumber),
+    // disable api call when there is no groupId
     enabled: !!groupIdNumber,
   });
 
   const { data: groupPosts, isLoading: isGroupPostsLoading } = useQuery({
     queryKey: ["groupPosts", groupIdNumber],
     queryFn: () => getGroupPosts(groupIdNumber),
+    // disable api call when there is no groupId
     enabled: !!groupIdNumber,
   });
 
@@ -43,9 +45,11 @@ const GroupDetails = () => {
       groupId: number;
     }) => createPost(postData),
     onSuccess: () => {
+      // invalidate query to get most recent posts after post creation
       queryClient.invalidateQueries({
         queryKey: ["groupPosts", groupIdNumber],
       });
+      // reset form
       setNewPost({ title: "", content: "" });
       toast.success("Post created");
     },
@@ -58,9 +62,11 @@ const GroupDetails = () => {
   const { mutate: addNewUser } = useMutation({
     mutationFn: (email: string) => addUserToGroup(groupIdNumber, email),
     onSuccess: () => {
+      // invalidate query to get most recent group data after user added to group
       queryClient.invalidateQueries({
         queryKey: ["group", groupIdNumber],
       });
+      // reset form
       setNewUserEmail("");
       toast.success("User added to group");
     },
@@ -73,6 +79,7 @@ const GroupDetails = () => {
   const { mutate: removeUser } = useMutation({
     mutationFn: (userId: number) => deleteUserFromGroup(groupIdNumber, userId),
     onSuccess: () => {
+      // invalidate query to get most recent group data after user removed from group
       queryClient.invalidateQueries({
         queryKey: ["group", groupIdNumber],
       });
@@ -83,6 +90,7 @@ const GroupDetails = () => {
     },
   });
 
+  // prevent default to stop form submissions from sending default form requests
   const handleCreatePost = (e: FormEvent) => {
     e.preventDefault();
     createNewPost({ ...newPost, groupId: groupIdNumber });

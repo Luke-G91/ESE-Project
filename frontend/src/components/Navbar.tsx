@@ -10,6 +10,8 @@ const Navbar = () => {
   const handleLogout = async () => {
     await logout();
     navigate("/login");
+    // forces userInfo to be refetched
+    // prevents old userInfo after logout
     refetch();
   };
 

@@ -19,6 +19,7 @@ router.get("/", authenticateToken, async (req, res) => {
     const groups = await groupController.findAllGroupsForUser(user.id);
     res.json(groups);
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to fetch groups" });
   }
 });
@@ -30,12 +31,15 @@ router.get("/:groupId", authenticateToken, async (req, res) => {
     return;
   }
 
+  // as the id is a query parameter it is a string
+  // however it is needed as a number
   const groupId = Number(req.params.groupId);
   if (!groupId) {
     res.status(400).json({ error: "Failed to fetch group" });
     return;
   }
 
+  // validate user is in the group
   const userGroup = await groupController.findUserGroupByGroupIdAndUserId(
     groupId,
     user.id,
@@ -49,6 +53,7 @@ router.get("/:groupId", authenticateToken, async (req, res) => {
     const group = await groupController.findGroupById(groupId);
     res.json(group);
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to fetch groups" });
   }
 });
@@ -60,7 +65,9 @@ router.get("/:groupId/post", authenticateToken, async (req, res) => {
     return;
   }
 
-  const groupId: number = Number(req.params.groupId);
+  // as the id is a query parameter it is a string
+  // however it is needed as a number
+  const groupId = Number(req.params.groupId);
   const userGroup = await groupController.findUserGroupByGroupIdAndUserId(
     groupId,
     user.id,
@@ -74,6 +81,7 @@ router.get("/:groupId/post", authenticateToken, async (req, res) => {
     const groups = await postController.findAllPostsForGroup(groupId, user.id);
     res.json(groups);
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to fetch groups" });
   }
 });
@@ -92,6 +100,7 @@ router.post("/", authenticateToken, async (req, res) => {
     await groupController.addUserToGroup(newGroup.id, user.id);
     res.json({ message: "Group created successfully", newGroup: newGroup });
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to create group" });
   }
 });
@@ -99,6 +108,8 @@ router.post("/", authenticateToken, async (req, res) => {
 router.post("/:groupId/user", authenticateToken, async (req, res) => {
   const { userEmail } = req.body as AddUserToGroupRequest;
 
+  // as the id is a query parameter it is a string
+  // however it is needed as a number
   const groupId = Number(req.params.groupId);
   if (!groupId) {
     res.status(400).json({ error: "Group does not exist" });
@@ -111,6 +122,7 @@ router.post("/:groupId/user", authenticateToken, async (req, res) => {
     return;
   }
 
+  // validate user is in the group
   const userGroup = await groupController.findUserGroupByGroupIdAndUserId(
     groupId,
     user.id,
@@ -132,12 +144,16 @@ router.post("/:groupId/user", authenticateToken, async (req, res) => {
       message: "User added to group successfully",
     });
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to add user to group" });
   }
 });
 
 router.delete("/:groupId/user/:userId", authenticateToken, async (req, res) => {
-  const { groupId, userId } = req.params;
+  // as the ids are query parameters they are strings
+  // however they are needed as numbers
+  const groupId = Number(req.params.groupId);
+  const userIdToDelete = Number(req.params.userId);
 
   const user = req.user;
   if (!user) {
@@ -145,8 +161,9 @@ router.delete("/:groupId/user/:userId", authenticateToken, async (req, res) => {
     return;
   }
 
+  // validate user is in the group
   const userGroup = await groupController.findUserGroupByGroupIdAndUserId(
-    Number(groupId),
+    groupId,
     user.id,
   );
   if (!userGroup) {
@@ -156,8 +173,8 @@ router.delete("/:groupId/user/:userId", authenticateToken, async (req, res) => {
 
   const userGroupToDelete =
     await groupController.findUserGroupByGroupIdAndUserId(
-      Number(groupId),
-      Number(userId),
+      groupId,
+      userIdToDelete,
     );
   if (!userGroupToDelete) {
     res.status(400).json({ error: "User is not in group" });
@@ -170,6 +187,7 @@ router.delete("/:groupId/user/:userId", authenticateToken, async (req, res) => {
       message: "User removed from group successfully",
     });
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to remove user from group" });
   }
 });
