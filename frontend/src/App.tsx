@@ -35,6 +35,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            // other routes the user must be authorized
             <Route
               path="/*"
               element={
@@ -85,6 +86,7 @@ const ProtectedRoutes = () => {
           </ProtectedRoute>
         }
       />
+      // if the user tries to access an undefined route redirect home
       <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>
   );

@@ -14,13 +14,16 @@ const Groups = () => {
   const { data: groups, isLoading } = useQuery({
     queryKey: ["groups", user?.id],
     queryFn: getAllGroups,
+    // disable api call when there is no user
     enabled: !!user,
   });
 
   const { mutate: createNewGroup } = useMutation({
     mutationFn: createGroup,
     onSuccess: () => {
+      // invalidate query to get most recent group data after creating a group
       queryClient.invalidateQueries({ queryKey: ["groups", user?.id] });
+      // reset form
       setNewGroup({ name: "", description: "" });
       toast.success("Group created successfully");
     },
@@ -30,6 +33,7 @@ const Groups = () => {
     },
   });
 
+  // prevent default to stop form submissions from sending default form requests
   const handleCreateGroup = (e: FormEvent) => {
     e.preventDefault();
     createNewGroup(newGroup);

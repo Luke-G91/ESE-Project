@@ -23,9 +23,11 @@ const PostDetail = () => {
     mutationFn: (newComment: { postId: number; content: string }) =>
       createComment(newComment),
     onSuccess: () => {
+      // invalidate query to get most recent post details after creating a comment
       queryClient.invalidateQueries({
         queryKey: ["postDetails", postIdNumber],
       });
+      // reset form
       setNewComment("");
       toast.success("Comment created");
     },
@@ -39,6 +41,7 @@ const PostDetail = () => {
     setNewComment(e.target.value);
   };
 
+  // prevent default to stop form submissions from sending default form requests
   const handleCommentSubmit = (e: FormEvent) => {
     e.preventDefault();
     addComment({ postId: postIdNumber, content: newComment });

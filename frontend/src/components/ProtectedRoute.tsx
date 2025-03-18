@@ -13,6 +13,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   if (isLoading) {
     return <div className="loading">Loading...</div>;
   }
+  // undefined user cannot access a protected route
   if (!user) {
     return <Navigate to="/login" replace />;
   }
