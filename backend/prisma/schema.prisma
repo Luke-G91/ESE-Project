@@ -14,6 +14,8 @@ model User {
   password  String
   createdAt DateTime @default(now())
 
+  @@index([email])
+
   posts          Post[]
   chatGroups     ChatGroup[]     @relation("UserChatGroups")
   userChatGroups UserChatGroup[]
@@ -51,6 +53,8 @@ model Post {
 
   authorId Int
   author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
 
   chatGroupId Int
   chatGroup   ChatGroup  @relation(fields: [chatGroupId], references: [id], onDelete: Cascade)
