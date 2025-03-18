@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { getPostDetails } from "../api/post";
 import { createComment } from "../api/comment";
+import Comment from "../components/Comment";
 
 const PostDetail = () => {
   const { postId } = useParams<{ postId: string }>();
@@ -68,17 +69,7 @@ const PostDetail = () => {
         <div className="post-detail-comments-section">
           <h2>Comments</h2>
           {post.comments.map((comment) => (
-            <div key={comment.id} className="post-detail-comment-card">
-              <div className="post-detail-comment-header">
-                <span className="post-detail-comment-author">
-                  {comment.author}
-                </span>
-                <span className="post-detail-comment-date">
-                  {new Date(comment.createdAt).toLocaleString()}
-                </span>
-              </div>
-              <p className="post-detail-comment-content">{comment.content}</p>
-            </div>
+            <Comment comment={comment} />
           ))}
 
           <form
