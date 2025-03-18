@@ -68,21 +68,28 @@ The application is built using a three-layer architecture:
 ### Prerequisites
 
 - Node.js and npm
+- Serve npm package
 - A PostgreSQL database
 - Git
+- Docker
 
 ### Setup Steps
 
 1. **Clone the Repository**
 
    ```bash
-
+   git clone git@github.com:Luke-G91/ESE-Project.git
    ```
 
 2. **Install Dependencies**
 
    ```bash
-
+   cd ESE-Project/
+   cd backend/
+   npm i
+   cd ../frontend/
+   npm i
+   cd ..
    ```
 
 3. **Configure Environment Variables**
@@ -91,7 +98,7 @@ The application is built using a three-layer architecture:
 #### **Frontend Environment Variables (./frontend/.env)**
 
 ```env
-VITE_API_URL=<backend-api-base-url>
+VITE_API_URL=<backend-base-url>
 ```
 
 #### **Backend Environment Variables (./backend/.env)**
@@ -99,41 +106,66 @@ VITE_API_URL=<backend-api-base-url>
 ```env
 DATABASE_URL=<your-database-url>
 PORT=<backend-port>
-JWT_SECRET=<your-secret-key>
-FRONTEND_URL=<frontend-url>
+JWT_SECRET=<your-jwt-secret-key>
+FRONTEND_URL=<frontend-base-url>
 ```
 
-4. **Run the Application**
+4. **Setup**
+
+   - Apply migrations:
+
+     ```bash
+     cd backend/
+     npx prisma generate
+     npx prisma migrate deploy
+     cd ..
+     ```
+
+   - Local database:
+
+     ```bash
+     docker compose up
+     ```
+
+   Use `$DATABASE_URL=postgresql://myuser:mypassword@localhost:5433/mydatabase` in backend env
+
+5. **Run the Application**
 
    - Start the backend:
 
      ```bash
-
+     cd backend/
+     npm run dev
+     cd ..
      ```
 
    - Build the backend:
 
      ```bash
-
+     cd backend/
+     npm run build
+     cd ..
      ```
+
+   This can then be run with `node backend/dist/app.js`
 
    - Start the frontend:
 
      ```bash
-
+     cd frontend/
+     npm run dev
+     cd ..
      ```
 
    - Build the frontend:
 
      ```bash
-
+     cd frontend/
+     npm run build
+     cd ..
      ```
 
-   - Start local database:
-
-     ```bash
-
-     ```
+     The static html can then be served `serve -s frontend/dist`
 
 ## Known Issues & Future Enhancements
 
@@ -147,4 +179,3 @@ FRONTEND_URL=<frontend-url>
 ## References
 
 - Refernces here
-
