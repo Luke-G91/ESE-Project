@@ -41,6 +41,7 @@ router.get("/:postId/comment", authenticateToken, async (req, res) => {
     const comments = await commentController.findAllCommentsForPost(post.id);
     res.json(comments);
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to get comments" });
   }
 });
@@ -85,6 +86,7 @@ router.post("/:postId/comment", authenticateToken, async (req, res) => {
     );
     res.json({ message: "Comment created successfully", newComment });
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to create comment" });
   }
 });

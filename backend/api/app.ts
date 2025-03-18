@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(corsOptions);
 // Allows cookies to be used in requests
 app.use(cookieParser());
-// Erro handler for unhandled errors
+// Error handler for unhandled errors
 app.use(errorHandler);
 
 // Add individual routers using a base route

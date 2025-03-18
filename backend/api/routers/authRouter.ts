@@ -26,6 +26,7 @@ router.post("/register", async (req, res) => {
     const newUser = await userController.createUser(createUserRequest);
     res.json({ message: "User registered successfully", newUser });
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to create user" });
   }
 });
@@ -78,7 +79,8 @@ router.get("/userInfo", async (req, res) => {
     }
 
     res.json(user);
-  } catch (err) {
+  } catch (error) {
+    console.error(error);
     res.status(401).json({ error: "Invalid or expired token" });
   }
 });

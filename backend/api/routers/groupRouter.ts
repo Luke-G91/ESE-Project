@@ -19,6 +19,7 @@ router.get("/", authenticateToken, async (req, res) => {
     const groups = await groupController.findAllGroupsForUser(user.id);
     res.json(groups);
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to fetch groups" });
   }
 });
@@ -51,6 +52,7 @@ router.get("/:groupId", authenticateToken, async (req, res) => {
     const group = await groupController.findGroupById(groupId);
     res.json(group);
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to fetch groups" });
   }
 });
@@ -78,6 +80,7 @@ router.get("/:groupId/post", authenticateToken, async (req, res) => {
     const groups = await postController.findAllPostsForGroup(groupId, user.id);
     res.json(groups);
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to fetch groups" });
   }
 });
@@ -96,6 +99,7 @@ router.post("/", authenticateToken, async (req, res) => {
     await groupController.addUserToGroup(newGroup.id, user.id);
     res.json({ message: "Group created successfully", newGroup: newGroup });
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to create group" });
   }
 });
@@ -138,6 +142,7 @@ router.post("/:groupId/user", authenticateToken, async (req, res) => {
       message: "User added to group successfully",
     });
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to add user to group" });
   }
 });
@@ -179,6 +184,7 @@ router.delete("/:groupId/user/:userId", authenticateToken, async (req, res) => {
       message: "User removed from group successfully",
     });
   } catch (error) {
+    console.error(error);
     res.status(400).json({ error: "Failed to remove user from group" });
   }
 });
