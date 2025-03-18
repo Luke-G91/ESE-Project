@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { corsOptions } from "./middleware/cors.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 import authRouter from "./routers/authRouter.js";
 import postRouter from "./routers/postRouter.js";
 import groupRouter from "./routers/groupRouter.js";
@@ -18,6 +19,8 @@ app.use(express.json());
 app.use(corsOptions);
 // Allows cookies to be used in requests
 app.use(cookieParser());
+// Erro handler for unhandled errors
+app.use(errorHandler);
 
 // Add individual routers using a base route
 app.use("/", authRouter);
