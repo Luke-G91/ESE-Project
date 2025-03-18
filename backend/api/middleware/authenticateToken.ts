@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import * as userController from "../controllers/userController.js";
 
+// authentication middleware used for requests that require a user
 export const authenticateToken = async (
   req: Request,
   res: Response,
@@ -15,6 +16,7 @@ export const authenticateToken = async (
 
   const user = await userController.findUserByToken(token);
 
+  // add user info to request data
   req.user = user;
   next();
 };

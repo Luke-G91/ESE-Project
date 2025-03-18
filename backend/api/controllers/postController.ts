@@ -61,6 +61,7 @@ export const findPostDetailsById = async (id: number, userId: number) => {
     author: post.author.name,
     group: post.chatGroup.name,
     likeCount: post._count.PostLike,
+    // post.PostLike is filtered to current user
     likedByCurrentUser: post.PostLike.length > 0,
     comments: post.comments.map((comment) => ({
       id: comment.id,
@@ -124,6 +125,7 @@ export const findAllPostsForGroup = async (groupId: number, userId: number) => {
     author: post.author.name,
     group: post.chatGroup.name,
     likeCount: post._count.PostLike,
+    // post.PostLike is filtered to current user
     likedByCurrentUser: post.PostLike.length > 0,
   }));
 
@@ -171,6 +173,7 @@ export const findAllPostsForUser = async (userId: number) => {
     author: post.author.name,
     group: post.chatGroup.name,
     likeCount: post._count.PostLike,
+    // post.PostLike is filtered to current user
     likedByCurrentUser: post.PostLike.length > 0,
   }));
 

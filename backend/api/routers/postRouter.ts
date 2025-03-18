@@ -29,6 +29,8 @@ router.get("/:postId", authenticateToken, async (req, res) => {
     return;
   }
 
+  // as the id is a query parameter it is a string
+  // however it is needed as a number
   const postId = Number(req.params.postId);
   if (!postId) {
     res.status(400).json({ error: "Failed to get comments" });
@@ -89,16 +91,18 @@ router.post("/", authenticateToken, async (req, res) => {
 });
 
 router.post("/:postId/like", authenticateToken, async (req, res) => {
-  const { postId } = req.params;
-  const user = req.user;
+  // as the id is a query parameter it is a string
+  // however it is needed as a number
+  const postId = Number(req.params.postId);
 
+  const user = req.user;
   if (!user) {
     res.status(401).json({ error: "Unauthorized" });
     return;
   }
 
   try {
-    await postLikeController.createPostLike(Number(postId), user.id);
+    await postLikeController.createPostLike(postId, user.id);
     res.json({ message: "Post liked successfully" });
   } catch (error) {
     res.status(400).json({ error: "Failed to like post" });
@@ -106,16 +110,18 @@ router.post("/:postId/like", authenticateToken, async (req, res) => {
 });
 
 router.delete("/:postId/like", authenticateToken, async (req, res) => {
-  const { postId } = req.params;
-  const user = req.user;
+  // as the id is a query parameter it is a string
+  // however it is needed as a number
+  const postId = Number(req.params.postId);
 
+  const user = req.user;
   if (!user) {
     res.status(401).json({ error: "Unauthorized" });
     return;
   }
 
   try {
-    await postLikeController.deletePostLike(Number(postId), user.id);
+    await postLikeController.deletePostLike(postId, user.id);
     res.json({ message: "Post liked removed successfully" });
   } catch (error) {
     res.status(400).json({ error: "Failed to remove like from post" });
