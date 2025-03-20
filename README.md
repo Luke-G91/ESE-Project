@@ -243,6 +243,8 @@ FRONTEND_URL=<frontend-base-url> # The URL where your frontend is hosted
      docker compose up
      ```
 
+   Use `DATABASE_URL=postgresql://myuser:mypassword@localhost:5433/mydatabase` in the backend env
+
    - Apply migrations:
 
      ```bash
@@ -250,8 +252,6 @@ FRONTEND_URL=<frontend-base-url> # The URL where your frontend is hosted
      npx prisma generate
      npx prisma migrate deploy
      ```
-
-   Use `DATABASE_URL=postgresql://myuser:mypassword@localhost:5433/mydatabase` in the backend env
 
 5. **Run the Application**
 
