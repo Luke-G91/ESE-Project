@@ -106,7 +106,7 @@ The architecture is built using a three-layer structure, integrating modern fram
     - `POST /register` for user registration
     - `POST /login` for user login
     - `POST /logout` for user logout
-    - `GET /userInfo` for user details
+    - `GET /userInfo` for fetching current user details
   - Relevant Modules/Classes:
     - [Auth middleware](./backend/api/middleware/authenticateToken.ts)
     - [User models](./backend/api/models/user/)
@@ -237,18 +237,18 @@ FRONTEND_URL=<frontend-base-url> # The URL where your frontend is hosted
 
 4. **Setup**
 
+   - Local database (Optional):
+
+     ```bash
+     docker compose up
+     ```
+
    - Apply migrations:
 
      ```bash
      cd backend/
      npx prisma generate
      npx prisma migrate deploy
-     ```
-
-   - Local database (Optional):
-
-     ```bash
-     docker compose up
      ```
 
    Use `DATABASE_URL=postgresql://myuser:mypassword@localhost:5433/mydatabase` in the backend env
