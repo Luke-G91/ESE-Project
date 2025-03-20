@@ -61,32 +61,33 @@ The architecture is built using a three-layer structure, integrating modern fram
 
 ## Enterprise Considerations
 
-- **Performance:**
+### Performance
 
-  - In PostgreSQL, primary keys are indexed by default. Additional indexes have been created on user emails and post creation dates, chosen to improve query performance and reduce latency, as these values are frequently used for finding and sorting datafinding and sorting datafinding and sorting datafinding and sorting datafinding and sorting datafinding and sorting datafinding and sorting datafinding and sorting datafinding and sorting data.
-  - Frontend optimisations are achieved using Vite's default features, including hot module replacement (HMR) and code splitting. HMR allows real-time updates without a full refresh during development, preserving application state, while code splitting reduces initial load times by splitting the code into smaller chunks loaded on demand.
+- In PostgreSQL, primary keys are indexed by default. Additional indexes have been created on user emails and post creation dates, chosen to improve query performance and reduce latency, as these values are frequently used for finding and sorting datafinding and sorting datafinding and sorting datafinding and sorting datafinding and sorting datafinding and sorting datafinding and sorting datafinding and sorting datafinding and sorting data.
+- Frontend optimisations are achieved using Vite's default features, including hot module replacement (HMR) and code splitting. HMR allows real-time updates without a full refresh during development, preserving application state, while code splitting reduces initial load times by splitting the code into smaller chunks loaded on demand.
 
-- **Scalability:**
+### Scalability
 
-  - Vercel and Railway both support automatic scaling of the frontend and backend to manage varying traffic. However, this scalability is dependant on the selected plan. The free plan offers fewer resources compared to the pro plan, so future upgrades may be necessary to accommodate very high usage and growth.
-  - Supabase offers horizontal scaling capabilities for the PostgreSQL database, accommodating increasing data storage and query demands as the application grows.
+- Vercel and Railway both support automatic scaling of the frontend and backend to manage varying traffic. However, this scalability is dependant on the selected plan. The free plan offers fewer resources compared to the pro plan, so future upgrades may be necessary to accommodate very high usage and growth.
+- Supabase offers horizontal scaling capabilities for the PostgreSQL database, accommodating increasing data storage and query demands as the application grows.
 
-- **Robustness:**
+### Robustness
 
-  - TypeScript is utilised on both the frontend and backend to provide type safety, enhancing development efficiency and reducing potential runtime errors.
-  - Comprehensive error handling systems are in place on both the backend and frontend, with backend error handling designed to present user-readable messages, but more detailed error messages can be found in the logs. React Query on the frontend handles error states efficiently, while React Toastify is used to display error notifications, preventing application crashes.
-  - Prisma ORM standardises and optimises database interactions, providing a history of migrations for easy rollback and updates.
-  - Logging provided by Railway, Vercel, and Supabase enables real-time issue diagnosis.
+- TypeScript is utilised on both the frontend and backend to provide type safety, enhancing development efficiency and reducing potential runtime errors.
+- Comprehensive error handling systems are in place on both the backend and frontend, with backend error handling designed to present user-readable messages, but more detailed error messages can be found in the logs. React Query on the frontend handles error states efficiently, while React Toastify is used to display error notifications, preventing application crashes.
+- Prisma ORM standardises and optimises database interactions, providing a history of migrations for easy rollback and updates.
+- Logging provided by Railway, Vercel, and Supabase enables real-time issue diagnosis.
 
-- **Security:**
+### Security
 
-  - The application uses industry-standard security practices with JWT for authentication, minimising server-side session management and freeing up server resources. Bcrypt is used for secure password hashing, and environment variables ensure configurations remain secure.
-  - Prisma helps in preventing SQL injection by using parameterised queries, which automatically handle input sanitisation, ensuring that user inputs are safely interpreted by the database.
-  - Both frontend and backend validation are implemented, ensuring data integrity and security by validating user inputs such as passwords, before processing.
+- The application uses industry-standard security practices with JWT for authentication, minimising server-side session management and freeing up server resources. Bcrypt is used for secure password hashing, and environment variables ensure configurations remain secure.
+- Prisma helps in preventing SQL injection by using parameterised queries, which automatically handle input sanitisation, ensuring that user inputs are safely interpreted by the database.
+- Both frontend and backend validation are implemented, ensuring data integrity and security by validating user inputs such as passwords, before processing.
 
-- **Additional Considerations:**
-  - Modular design on both the backend and frontend promote code reuse and maintainability, allowing easier updates and debugging.
-  - Express, combined with async/await, efficiently handles concurrent requests, enhancing server responsiveness.
+### Additional Considerations
+
+- Modular design on both the backend and frontend promote code reuse and maintainability, allowing easier updates and debugging.
+- Express, combined with async/await, efficiently handles concurrent requests, enhancing server responsiveness.
 
 ## Key Features
 
