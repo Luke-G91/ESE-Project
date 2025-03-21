@@ -310,7 +310,7 @@ FRONTEND_URL=<frontend-base-url> # The URL where your frontend is hosted
 
 ## Video Demonstration
 
-[Video Walkthrough](https://youtu.be/Cs4M9LeCOGo)
+[Video Walkthrough](https://youtu.be/Hi8JyIJxk5w)
 
 ## References
 
